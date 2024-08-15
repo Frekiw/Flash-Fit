@@ -19,7 +19,10 @@
     <div class="mdc-layout-grid">
         <div class="mdc-layout-grid__inner">
             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
-                <div class="container ">
+                <div class="container">
+                  <div class="d-flex justify-content-end align-items-center pb-3 pt-1">
+                    <a href="{{ route('faildebits.index') }}" class="btn btn-danger">Daftar Fail Debit</a>
+                  </div>
                   <div class="mdc-card">
                     <div class="d-flex justify-content-between align-items-center py-2 pb-4 ">
                         <h6 class="card-title card-padding pb-0">Data Member</h6>
@@ -32,12 +35,12 @@
                             <thead>
                                 <tr>
                                     <th class="text-center">Nomor</th>
-                                    <th class="text-center">Roles</th>
-                                    <th class="text-center">Tanggal</th>
+                                    <th class="text-center">MGM</th>
+                                    <th class="text-center">Points</th>
                                     <th class="text-center">Code</th>
                                     <th class="text-center">Nama</th>
-                                    <th class="text-center">Tanggal Lahir</th>
-                                    <th class="text-center">Nomer Telephone</th>
+                                    <th class="text-center">Lahir</th>
+                                    <th class="text-center">Phone</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -45,10 +48,8 @@
                               @forelse ($participant as $item)
                                 <tr>
                                     <td class="text-center">{{ $item->id_participant }}</td>
-                                    <td class="text-center">{{ $item->roles }}</td>
-                                    <td class="d-flex align-items-center justify-content-center">
-                                      {{ $item->tanggal }}
-                                    </td>
+                                    <td class="text-center">{{ $totalMgm[$item->id_participant] ?? 0 }}</td>
+                                    <td class="text-center"><div class="bg-warning text-center rounded-circle py-3"><small class="fw-bold">{{ $item->point }}</small></div></td>
                                     <td class="text-center">
                                         {{ $item->code }}
                                     </td>
@@ -102,7 +103,7 @@
                                         {{ $itemss->time }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $itemss->location }}
+                                        {{ $itemss->location->name }}
                                     </td>
                                     <td>
                                      <div class="d-flex justify-content-center align-items-center">

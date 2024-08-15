@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Sales;
 use App\Models\Packaged;
 use App\Models\Presence;
@@ -22,8 +23,14 @@ class ParticipantController extends Controller
         $packaged = Packaged::all();
         $presence = Presence::with(['user'])->get();
         $participant = Participant::where('roles', 'member')->get();
+
+        // Calculate total_mgm for each participant
+        $totalMgm = [];
+        foreach ($participant as $item) {
+            $totalMgm[$item->id_participant] = User::where('code_refal', $item->code)->count();
+        }
     
-        return view('participants.index', compact('sales','participant','packaged','presence'));
+        return view('participants.index', compact('sales','participant','packaged','presence','totalMgm'));
     
     }
 
@@ -146,5 +153,4 @@ class ParticipantController extends Controller
         $presence->delete();
         return redirect()->route('participants.index')->with('status', 'Berhasil Hapus Data');
     }
-
 }

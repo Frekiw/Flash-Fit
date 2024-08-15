@@ -113,7 +113,7 @@
                                         {{ $items->time }}
                                     </td>
                                     <td class="text-center">
-                                        {{ $items->location }}
+                                        {{ $items->location->name }}
                                     </td>
                                     <td class="text-center">
                                       <div class="btn btn-dark rounded-pill py-0 px-2">

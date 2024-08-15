@@ -50,6 +50,12 @@
                           </div>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                      <label for="notes" class="fw-bold mt-3">Tnc Daftar</label>
+                      <div class="input-group input-group-outline">
+                          <textarea class="form-control w-100" value="{{ old('tnc_daftar') ?? $item->tnc_daftar }}" name="tnc_daftar" id="notes" placeholder="Masukkan Tnc Daftar">{{ $item->tnc_daftar }}</textarea>
+                      </div>
+                    </div>
                 </form>
                 @endforeach             
                 </div>
@@ -88,7 +94,18 @@
 <script src="{{ asset('admindashboard/assets/js/misc.js')}}"></script>
 <!-- endinject -->
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
-
+<script>
+  ClassicEditor
+  .create(document.querySelector('#notes'))
+  .catch(error => {
+  console.error(error);
+  });
+  ClassicEditor
+  .create(document.querySelector('#notes2'))
+  .catch(error => {
+  console.error(error);
+  });
+</script>
 
 
 

@@ -28,9 +28,15 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="notes" class="fw-bold mt-3">Kategori</label>
-                            <div class="input-group input-group-outline">
-                                <input class="form-control w-100" name="category" id="category" placeholder="Masukkan Kategory">
+                            <label for="notes" class=" mt-3">Kategori</label>
+                            <div class="input-group input-group-outline w-100">
+                                <select class="form-control w-100" name="category" id="category">
+                                    <option value="" disabled selected>Masukkan Category</option>
+                                    <option value="Kelas">Kelas</option>
+                                    <option value="Membership">Membership</option>
+                                    <option value="Transaksi">Transaksi</option>
+                                    <option value="Voucher">Voucher</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -130,9 +136,15 @@
                 @method('PUT')
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="notes" class="fw-bold mt-3">Kategori</label>
-                        <div class="input-group input-group-outline">
-                            <input class="form-control w-100" value="{{ old('category') ?? $notifications->category }}" name="category" id="category" placeholder="Masukkan Kategory">
+                        <label for="notes" class=" mt-3">Kategori</label>
+                        <div class="input-group input-group-outline w-100">
+                            <select class="form-control w-100" name="category" id="category">
+                                <option value="" disabled {{ !$notifications->category ? 'selected' : '' }}>Masukkan Kategori</option>
+                                <option value="Kelas" {{ $notifications->category == 'Kelas' ? 'selected' : '' }}>Kelas</option>
+                                <option value="Membership" {{ $notifications->category == 'Membership' ? 'selected' : '' }}>Membership</option>
+                                <option value="Transaksi" {{ $notifications->category == 'Transaksi' ? 'selected' : '' }}>Transaksi</option>
+                                <option value="Voucher" {{ $notifications->category == 'Voucher' ? 'selected' : '' }}>Voucher</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-6">

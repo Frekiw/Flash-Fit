@@ -54,6 +54,12 @@
                           </div>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                      <label for="notes" class="fw-bold mt-3">Tnc Daftar</label>
+                        <div class="input-group input-group-outline">
+                            <textarea class="form-control w-100" name="tnc_daftar" id="notes" placeholder="Masukkan Tnc Daftar">{{ $item->tnc_daftar }}</textarea>
+                        </div>
+                    </div>
                 @endforeach              
                 </div>
               </div>

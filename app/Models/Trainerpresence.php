@@ -12,7 +12,7 @@ class Trainerpresence extends Model
 
     protected $primaryKey = 'id_trainerpresence';
     protected $fillable = [
-        'user_id','date','time','location','participant_id','remain'];
+        'user_id','date','time','location_id','participant_id','remain'];
 
 
     public function user()
@@ -22,6 +22,10 @@ class Trainerpresence extends Model
     public function participant()
     {
         return $this->belongsTo(Participant::class, 'participant_id', 'id_participant');
+    }
+    public function location()
+    {
+        return $this->belongsTo(Location::class,'location_id','id_location');
     }
     public function getCreatedAtAttribute($value)
     {

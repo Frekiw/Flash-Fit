@@ -107,7 +107,7 @@ class JadwalkelasController extends Controller
         $participant = Participant::where('roles', 'trainer')->get();
 
         return view('jadwalkelass.location', [
-            'location' => $location,
+            'location' => $location,            
             'daftarloc' => $daftarloc,
             'jadwalkelas' => $jadwalkelas,
             'kelas' => $kelas,

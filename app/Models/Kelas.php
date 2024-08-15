@@ -13,6 +13,11 @@ class Kelas extends Model
     protected $fillable = [
         'picture','description','calories','name'];
     
+    public function jadwalkelas()
+    {
+        return $this->hasMany(Jadwalkelas::class, 'class_id', 'id_class');
+    }
+        
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timestamp;

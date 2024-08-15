@@ -93,4 +93,10 @@ class LocationController extends Controller
 
         return redirect()->route('locations.index')->with('status','Berhasil Hapus Data');
     }
+
+    public function location($id_location)
+    {
+        $location = Location::select('*')->where('id_location', $id_location)->get();
+        return view('locations.qrcode', ['location' => $location]);
+    }
 }

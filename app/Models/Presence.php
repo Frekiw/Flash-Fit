@@ -12,11 +12,16 @@ class Presence extends Model
 
     protected $primaryKey = 'id_presence';
     protected $fillable = [
-        'tanggal','user_id','time','location'];
+        'tanggal','user_id','time','location_id'];
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function location()
+    {
+        return $this->belongsTo(Location::class,'location_id','id_location');
     }
     
     public function getCreatedAtAttribute($value)

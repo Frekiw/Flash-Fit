@@ -29,6 +29,15 @@
                   <div class="input-group input-group-outline w-100">
                       <input type="text" name="discount" class="form-control" id="discount" placeholder="Masukkan Disocunt">
                   </div>
+                  <label for="notes" class=" mt-3">Kategori</label>
+                    <div class="input-group input-group-outline w-100">
+                        <select class="form-control w-100" name="category" id="category">
+                            <option value="" disabled selected>Masukkan Category</option>
+                            <option value="Re-New">Re-New</option>
+                            <option value="New Member">New Member</option>
+                            <option value="Sesi PT">Sesi PT</option>
+                        </select>
+                    </div>
                   <label for="time" class=" mt-3">Code</label>
                   <div class="input-group input-group-outline w-100">
                       <input type="text" name="code" class="form-control" id="code" placeholder="Masukkan Code Voucher">
@@ -58,7 +67,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="d-flex justify-content-end align-items-center">
-                      <a href="{{ route('vouchers.create') }}" type="button" class="btn btn-primary me-2 "><small><i class="fas fa-plus"></i></small></a>
+                      <a data-bs-toggle="modal" data-bs-target="#exampleModal" type="button" class="btn btn-primary me-2 "><small><i class="fas fa-plus"></i></small></a>
                         <button class="btn btn-dark me-2 owl-prev"><small><i class="fas fa-chevron-left"></i></small></button>
                         <button class="btn btn-dark me-2 owl-next"><small><i class="fas fa-chevron-right"></i></small></button>
                     </div>
@@ -72,7 +81,7 @@
                         <div class="rounded-4 card-voucher">
                             <div class="p-2">
                                 <div class="col-md-12">
-                                  <h6 class="text-center text-white">Voucher</h6>
+                                  <h6 class="text-center text-white">Voucher - {{ $item->category }} </h6>
                                 </div>
                                 <div class="col-md-12 pt-1 ps-2">
                                   <h3 class="text-center text-white">{{ 'Rp ' . number_format($item->discount, 0, ',', '.') }}</h3>
@@ -109,6 +118,7 @@
                                 <tr>
                                     <th class="text-center">Nomor</th>
                                     <th class="text-center">Discount</th>
+                                    <th class="text-center">Kategori</th>
                                     <th class="text-center">Code</th>
                                     <th class="text-center">Tanggal Expired</th>
                                     <th class="text-center">Detail</th>
@@ -120,7 +130,10 @@
                                 <tr>
                                     <td class="text-center">{{ $item->id_voucher }}</td>
                                     <td class="d-flex align-items-center justify-content-center">
-                                      {{ $item->discount }}
+                                      {{ 'Rp ' . number_format($item->discount, 0, ',', '.') }}
+                                    </td>
+                                    <td class="text-center">
+                                      {{ $item->category }}
                                     </td>
                                     <td class="text-center">
                                         {{ $item->code }}
@@ -166,6 +179,15 @@
                   <form action="{{ route('vouchers.update', $item->id_voucher) }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
+                    <label for="notes" class=" mt-3">Kategori</label>
+                    <div class="input-group input-group-outline w-100">
+                        <select class="form-control w-100" name="category" id="category">
+                            <option value="" disabled {{ !$item->category ? 'selected' : '' }}>Masukkan Kategori</option>
+                            <option value="Re-New" {{ $item->category == 'Re-New' ? 'selected' : '' }}>Re-New</option>
+                            <option value="New Member" {{ $item->category == 'New Member' ? 'selected' : '' }}>New Member</option>
+                            <option value="Sesi PT" {{ $item->category == 'Sesi PT' ? 'selected' : '' }}>Sesi PT</option>
+                        </select>
+                    </div>
                     <label for="time" class=" mt-3">Discount</label>
                     <div class="input-group input-group-outline w-100">
                         <input type="text" value="{{ old('discount', $item->discount) }}" name="discount" class="form-control" id="discount" placeholder="Masukkan Nama">

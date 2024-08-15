@@ -6,7 +6,7 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <title>Caroline Dash</title>
+      <title>FlashFit Dashboard</title>
       <!-- plugins:css -->
       <link rel="stylesheet" href="{{ asset('admindashboard/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
       <link rel="stylesheet" href="{{ asset('admindashboard/assets/vendors/css/vendor.bundle.base.css')}}">
@@ -29,7 +29,7 @@
       <!-- Layout styles -->
       <link rel="stylesheet" href="{{ asset('admindashboard/assets/css/demo_1/style.css')}}" />
       <!-- End layout styles -->
-      <link rel="shortcut icon" href="{{ asset('admindashboard/assets/images/favicon.png')}}" />
+      <link rel="shortcut icon" href="{{ asset('admindashboard/assets/images/logo.png')}}" />
       <!-- jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     

@@ -26,6 +26,10 @@ class Jadwalkelas extends Model
     {
         return $this->belongsTo(Kelas::class, 'class_id');
     }
+    public function kelas()
+    {
+        return $this->belongsTo(Kelas::class, 'class_id', 'id_kelas');
+    }
     
     public function getCreatedAtAttribute($value)
     {

@@ -74,6 +74,7 @@
                                     <th class="text-center">Kota</th>
                                     <th class="text-center">Map</th>
                                     <th class="text-center">Foto</th>
+                                    <th class="text-center">Qr Code</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -93,6 +94,7 @@
                                     <td class="text-center">
                                         <img class="rounded" style="width: 100%; object-fit:cover; height:60px" src="{{  asset('storage/'.$locations->photo) }}" alt="">
                                     </td>
+                                    <td class="text-center"><a href="{{ route('locations.qrcode', $locations->id_location) }}"><i class="fas fa-qrcode text-dark bg-warning rounded-circle p-2"></i></a></td>
                                     <td>
                                      <div class="d-flex justify-content-center align-items-center">
                                       <a type="button" data-bs-toggle="modal" data-bs-target="#EditModal{{ $locations->id_location }}" class="mdc-button mdc-button--outlined shaped-button outlined-button--edit mdc-ripple-upgraded mx-2"> Edit </a>

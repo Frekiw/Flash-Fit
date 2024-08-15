@@ -12,7 +12,7 @@ class Setting extends Model
 
     protected $primaryKey = 'id_setting';
     protected $fillable = [
-        'banner','banner2','promo_pt','promo_membership','tnc_cuti'];
+        'banner','banner2','promo_pt','promo_membership','tnc_cuti','tnc_daftar'];
 
     public function getCreatedAtAttribute($value)
     {

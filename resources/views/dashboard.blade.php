@@ -20,17 +20,17 @@
                                 <div class=" pl-3 pr-3">
                                     <p class="m-0 font-weight-medium tx-12">Member</p>
                                     <div class="chart-bar-rect "style="background-color:#30a80f"></div>
-                                    <p class="m-0 text-muted tx-12">25%</p>
+                                    <p class="m-0 text-muted tx-12">{{ $totalUserPresence }}</p>
                                 </div>
                                 <div class=" pl-3 pr-3">
                                     <p class="m-0 font-weight-medium tx-12"> Trainer </p>
                                     <div class="chart-bar-rect" style="background-color:#71f207"></div>
-                                    <p class="m-0 text-muted tx-12">60%</p>
+                                    <p class="m-0 text-muted tx-12">{{ $totalTrainerPresence }}</p>
                                 </div>
                                 <div class=" pl-3 pr-3">
                                     <p class="m-0 font-weight-medium tx-12"> Cuti </p>
                                     <div class="chart-bar-rect" style="background-color:#b3faa0"></div>
-                                    <p class="m-0 text-muted tx-12">15%</p>
+                                    <p class="m-0 text-muted tx-12">{{ $totalCuti }}</p>
                                 </div>
                             </div>
                         </div>
@@ -49,15 +49,15 @@
                         <canvas id="total-expences"></canvas>
                       </div>
                       <div class="mt-2">
-                        <i><small>Bulan <b>Juli</b></small></i>
+                        <i><small>Bulan <b>{{ \Carbon\Carbon::now()->translatedFormat('F') }}</b></small></i>
                         <div class="row mt-1">
                           <div class="col-md-6">
                             <small>New Member</small><br>
-                            <p class="fw-bold">Rp. 1.000.000</p>
+                            <p class="fw-bold">Rp. {{ number_format($totalTransaction, 0, ',', '.') }}</p>
                           </div>
                           <div class="col-md-6">
                             <small>Re-New</small><br>
-                            <p class="fw-bold">Rp. 2.000.000</p>
+                            <p class="fw-bold">Rp. {{ number_format($totalTransactionNew, 0, ',', '.') }}</p>
                           </div>
                         </div>
                       </div>
@@ -66,10 +66,11 @@
                   <div class="col-md-3 mx-auto">
                     <div class="d-flex justify-content-between align-items-center py-1 mb-3">
                         <h5 class="mb-0">Kehadiran Member</h5>
-                        <a href="#" class="bg-dark text-white rounded-circle iconrow2">
+                        <a href="{{ route('participants.index') }}" class="bg-dark text-white rounded-circle iconrow2">
                           <i class="fas fa-arrow-right p-2"></i>
                         </a>
                     </div>
+                    @foreach ($presence as $presences )
                     <div class="row my-2 border rounded border-dark">
                       <div class="d-flex align-items-center mx-auto p-2">
                         <div class="text-white bg-black bg-gradient align-self-start p-2 rounded">
@@ -79,51 +80,16 @@
                         </div>
                         <div class="ms-2">
                           <div class=" lh-1 m-0">
-                            <p class="m-0">Virgus Kaymal</p>
+                            <p class="m-0">{{ $presences->user->name }}</p>
                             <div class="d-flex align-items-center">
                               <i class="fa-regular fa-clock me-1"></i>
-                              <p class="m-0 fw-lighter">09.00</p>
+                              <p class="m-0 fw-lighter">{{ \Carbon\Carbon::parse($presences->time)->format('H:i') }}</p>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="row my-2 border rounded border-dark">
-                      <div class="d-flex align-items-center mx-auto p-2">
-                        <div class="text-white bg-black bg-gradient align-self-start p-2 rounded">
-                          <div class="p-1 px-2 text-center m-0">
-                            <i class="fa-solid fa-user text-center"></i>
-                          </div>
-                        </div>
-                        <div class="ms-2">
-                          <div class=" lh-1 m-0">
-                            <p class="m-0">Rangga Gna</p>
-                            <div class="d-flex align-items-center">
-                              <i class="fa-regular fa-clock me-1"></i>
-                              <p class="m-0 fw-lighter">09.00</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row my-2 border rounded border-dark">
-                      <div class="d-flex align-items-center mx-auto p-2">
-                        <div class="text-white bg-black bg-gradient align-self-start p-2 rounded">
-                          <div class="p-1 px-2 text-center m-0">
-                            <i class="fa-solid fa-user text-center"></i>
-                          </div>
-                        </div>
-                        <div class="ms-2">
-                          <div class=" lh-1 m-0">
-                            <p class="m-0">Jodi Rifky</p>
-                            <div class="d-flex align-items-center">
-                              <i class="fa-regular fa-clock me-1"></i>
-                              <p class="m-0 fw-lighter">09.00</p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    @endforeach
                   </div>
                 </div>
                 <div class="row my-4">
@@ -132,128 +98,65 @@
                       <div class="row mb-1">
                         <div class="d-flex justify-content-between align-items-center py-1">
                           <h5>Jadwal Kelas</h5>
-                          <a href="#" class="bg-dark text-white rounded-circle iconrow2">
+                          <a href="{{ route('jadwalkelass.index') }}" class="bg-dark text-white rounded-circle iconrow2">
                             <i class="fas fa-arrow-right p-2"></i>
                           </a>
                         </div>
                       </div>
+                      @foreach ($jadwalkelas as $jadwalkelas2 )
                       <div class="row my-1 border-bottom border-1 border-dark">
                         <div class="d-flex justify-content-between align-items-center mx-auto p-2">
                           <div class="d-flex align-items-center">
                             <div class="text-white bg-black bg-gradient align-self-start p-2 rounded">
                               <div class="p-1 py-2 text-center m-0">
-                                <p class="text-center fw-ligth lh-1 m-0">09.00</p>
+                                <p class="text-center fw-light lh-1 m-0">{{ \Carbon\Carbon::parse($jadwalkelas2->time)->format('H:i') }}</p>
                               </div>
                             </div>
                             <div class="ms-2 lh-1">
-                              <p class="mb-0">Nama Olahraga</p>
-                              <p class="mb-0 fw-lighter">Durasi Olga</p>
+                              <p class="mb-0">{{ $jadwalkelas2->kelas->name }}</p>
+                              <p class="mb-0 fw-lighter">{{ $jadwalkelas2->kelas->calories }}</p>
                             </div>
                           </div>
                           <div class="d-flex align-items-center">
                             <i class="fa-regular fa-clock me-2"></i>
-                            <p class="m-0 fw-lighter">60 Menit</p>
+                            <p class="m-0 fw-lighter">{{ $jadwalkelas2->date }}</p>
                           </div>
-                          <div class="d-flex align-items-center rounded bg-gradient text-white p-2" style="background-color:#71f207">
+                          <div class="d-flex align-items-center rounded bg-gradient text-white p-2 overlocation" style="background-color:#71f207">
                             <a class="text-dark" href="#"><i class="fa-solid fa-location-dot"></i>
-                              <small class="ms-1 fw-lighter">Rungkut</small>
+                              <small class="ms-1 fw-lighter">{{ $jadwalkelas2->location->name }}</small>
                             </a>
                           </div>
                         </div>
                       </div>
-                      <div class="row my-1 border-bottom border-1 border-dark">
-                        <div class="d-flex justify-content-between align-items-center mx-auto p-2">
-                          <div class="d-flex align-items-center">
-                            <div class="text-white bg-black bg-gradient align-self-start p-2 rounded">
-                              <div class="p-1 py-2 text-center m-0">
-                                <p class="text-center fw-ligth lh-1 m-0">09.00</p>
-                              </div>
-                            </div>
-                            <div class="ms-2 lh-1">
-                              <p class="mb-0">Nama Olahraga</p>
-                              <p class="mb-0 fw-lighter">Durasi Olga</p>
-                            </div>
-                          </div>
-                          <div class="d-flex align-items-center">
-                            <i class="fa-regular fa-clock me-2"></i>
-                            <p class="m-0 fw-lighter">60 Menit</p>
-                          </div>
-                          <div class="d-flex align-items-center rounded text-white p-2"  style="background-color:#71f207">
-                            <a class="text-dark" href="#"><i class="fa-solid fa-location-dot"></i>
-                              <small class="ms-1 fw-lighter">Rungkut</small>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row my-1 border-bottom border-1 border-dark">
-                        <div class="d-flex justify-content-between align-items-center mx-auto p-2">
-                          <div class="d-flex align-items-center">
-                            <div class="text-white bg-black bg-gradient align-self-start p-2 rounded">
-                              <div class="p-1 py-2 text-center m-0">
-                                <p class="text-center fw-ligth lh-1 m-0">09.00</p>
-                              </div>
-                            </div>
-                            <div class="ms-2 lh-1">
-                              <p class="mb-0">Nama Olahraga</p>
-                              <p class="mb-0 fw-lighter">Durasi Olga</p>
-                            </div>
-                          </div>
-                          <div class="d-flex align-items-center">
-                            <i class="fa-regular fa-clock me-2"></i>
-                            <p class="m-0 fw-lighter">60 Menit</p>
-                          </div>
-                          <div class="d-flex align-items-center rounded text-white p-2"  style="background-color:#71f207">
-                            <a class="text-dark" href="#"><i class="fa-solid fa-location-dot"></i>
-                              <small class="ms-1 fw-lighter">Rungkut</small>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
+                      @endforeach
                     </div>
                   </div>
                   <div class="col-md-4 mdc-card mx-auto">
                     <div class="card-inner">
                       <div class="d-flex justify-content-between align-items-center py-1">
                         <h5>Trainer</h5>
-                        <a href="#" class="bg-dark text-white rounded-circle iconrow2">
+                        <a href="{{ route('datatrainers.index') }}" class="bg-dark text-white rounded-circle iconrow2">
                           <i class="fas fa-arrow-right p-2"></i>
                         </a>
                       </div>
                       <div class="owl-carousel owl-theme mt-2">
+                        @forelse ($participant as $participants )
                         <div class="item">
                           <div class=" mx-2">
                             <div class="position-relative trainercarousel">
-                              <img class="" src="{{ asset('admindashboard/assets/images/pt1.jfif') }}" alt="">
+                              <img class="" src="{{  asset('storage/'.$participants->foto_trainer) }}" alt="">
                             </div>
                             <div class="position-absolute top-0 p-3 overlay-pt d-flex">
-                              <small class="text-white mt-auto">John Arnold</small>
+                              <small class="text-white mt-auto">{{ $participants->name }}</small>
                             </div>
                           </div>
                         </div>
-                        <div class="item">
-                          <div class=" mx-2">
-                            <div class="position-relative trainercarousel">
-                              <img class="" src="{{ asset('admindashboard/assets/images/pt2.jfif') }}" alt="">
-                            </div>
-                            <div class="position-absolute top-0 p-3 overlay-pt d-flex">
-                              <small class="text-white mt-auto">John Arnold</small>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="item">
-                          <div class=" mx-2">
-                            <div class="position-relative trainercarousel">
-                              <img class="" src="{{ asset('admindashboard/assets/images/pt3.jfif') }}" alt="">
-                            </div>
-                            <div class="position-absolute top-0 p-3 overlay-pt d-flex">
-                              <small class="text-white mt-auto">John Arnold</small>
-                            </div>
-                          </div>
-                        </div>
+                        @empty
+                        @endforelse
                       </div>
                       
                     </div>
-                  </div>  
+                </div>  
                 </div>
               </div>
               {{-- <div class="mdc-layout-grid">
@@ -1045,7 +948,8 @@
     $(".owl-carousel").owlCarousel({
       loop: true,
       margin: 1,
-      nav: true,
+      nav: false,
+      dots: false,
       autoWidth:true,
       autoplay: true,
       responsive: {
@@ -1061,6 +965,18 @@
       }
     });
   });
+  var doughnutPieData = {
+        datasets: [
+          {
+            data: [{{ $totalTrainerPresence }}, {{ $totalCuti }}, {{ $totalUserPresence }}],
+            backgroundColor: ["#71f207", "#b3faa0", "#30a80f"],
+            borderColor: ["#71f207", "#b3faa0", "#30a80f"]
+          }
+        ],
+
+        // These labels appear in the legend and in the tooltips when hovering different arcs
+        labels: []
+      };
 </script>
 </body>
 </html>

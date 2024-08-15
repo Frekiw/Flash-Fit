@@ -84,6 +84,7 @@
                                     <th class="text-center">Nomor</th>
                                     <th class="text-center">Code Member</th>
                                     <th class="text-center">Code Sales</th>
+                                    <th class="text-center">Code Referall</th>
                                     <th class="text-center">Nama</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Actions</th>
@@ -101,6 +102,15 @@
                                     <td class="text-center">
                                         <div class="btn btn-success rounded-pill px-3 py-0">
                                             <small>{{ $items->code_sales }}</small>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn btn-warning rounded-pill px-3 py-0">
+                                            @if ($items->code_refal == null)
+                                            <small>-</small>
+                                            @else
+                                            <small>{{ $items->code_refal }}</small>
+                                            @endif
                                         </div>
                                     </td>
                                     <td class="d-flex align-items-center justify-content-center">

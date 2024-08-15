@@ -3,17 +3,22 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Jadwalkelas;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Voucher extends Model
+class Faildebit extends Model
 {
     use HasFactory;
-
-    protected $primaryKey = 'id_voucher';
+    protected $primaryKey = 'id_faildebit';
     protected $fillable = [
-        'discount','code','exp_date','detail','category'];
+        'user_id','date'];
     
+        public function user()
+        {
+            return $this->belongsTo(User::class, 'user_id');
+        }
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timestamp;

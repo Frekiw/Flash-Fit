@@ -13,6 +13,10 @@ class Location extends Model
     protected $fillable = [
         'name','city','photo','map'];
     
+    public function jadwalkelas()
+    {
+        return $this->hasMany(Jadwalkelas::class, 'location_id', 'id_location');
+    }
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timestamp;

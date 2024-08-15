@@ -17,15 +17,16 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\PackagedController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FaildebitController;
 use App\Http\Controllers\HargasesiController;
 use App\Http\Controllers\DatatrainerController;
 use App\Http\Controllers\JadwalkelasController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\Session_transactionController;
 use App\Http\Controllers\UserpresenceController;
 use App\Http\Controllers\TrainerpresenceController;
+use App\Http\Controllers\Session_transactionController;
 
 
 /*
@@ -51,6 +52,8 @@ Route::prefix('dashboard')
         Route::resource('cutis', CutiController::class);
         Route::resource('packageds', PackagedController::class);
         Route::resource('transactions', TransactionController::class);
+        Route::resource('faildebits', FaildebitController::class);
+        Route::delete('/faildebits', [FaildebitController::class, 'deleteAllFaildebits'])->name('faildebits.delete');
         Route::resource('session_transactions', Session_transactionController::class);
         Route::resource('vouchers', VoucherController::class);
         Route::resource('saless', SalesController::class);
@@ -62,7 +65,9 @@ Route::prefix('dashboard')
         Route::resource('trainerpresences', TrainerpresenceController::class);
         Route::resource('userpresences', UserpresenceController::class);
         Route::resource('participants', ParticipantController::class);
+        // Route::get('/participants/faildebit', [ParticipantController::class, 'faildebit'])->name('participants.faildebit');
         Route::delete('/presence/{id_presence}', [ParticipantController::class, 'hapus'])->name('participants.hapus');
+        // Route::update('/presence/{id_presence}', [ParticipantController::class, 'update2'])->name('participants.update2');
 
         Route::resource('articles', ArticleController::class);
         Route::resource('banners', BannerController::class);
@@ -75,6 +80,10 @@ Route::prefix('dashboard')
         Route::resource('settings', SettingController::class);
         Route::resource('accounts', UserController::class);
     });
+
+Route::get('/qrcode/{id_location}',[LocationController::class,'location'])->name('locations.qrcode');
+
+
 
 // Route::middleware([
 //     'auth:sanctum',
