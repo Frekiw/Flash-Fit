@@ -16,6 +16,16 @@
   </style>
 <div class="page-wrapper mdc-toolbar-fixed-adjust">
   <main class="content-wrapper">
+    @if (session('status'))
+                <div class="row">
+                    <div class="col-md-4 ms-auto">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog">
           <div class="modal-content">
@@ -120,16 +130,15 @@
                     <img class="w-100 h-100 object-fit-cover" src="{{  asset('storage/'.$banners->photo) }}" alt="">
                 </div>
                 <div class="input-group input-group-outline w-100">
-                    <input type="file" name="photo" class="form-control" id="photo" placeholder="Masukkan Gambar"
-                        required>
+                    <input type="file" name="photo" class="form-control" id="photo" placeholder="Masukkan Gambar">
                 </div>  
                 <button type="submit" class="btn btn-warning my-3">Submit</button>
                 </form>
-                @endforeach
                 </div>
             </div>
         </div>
     </div>
+    @endforeach
 </main>
   <!-- partial:admindashboard/admindashboard/partials/_footer.html -->
   <footer>

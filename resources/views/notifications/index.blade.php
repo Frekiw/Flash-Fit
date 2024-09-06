@@ -16,6 +16,16 @@
   </style>
 <div class="page-wrapper mdc-toolbar-fixed-adjust">
   <main class="content-wrapper">
+    @if (session('status'))
+                <div class="row">
+                    <div class="col-md-4 ms-auto">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog">
           <div class="modal-content">
@@ -81,7 +91,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table id="order-listing" class="table">
+                        <table id="example" class="table display">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nomor</th>
@@ -116,6 +126,17 @@
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th class="text-center">Nomor</th>
+                                    <th class="text-center">Kategori</th>
+                                    <th class="text-center">Judul</th>
+                                    <th class="text-center">Deskripsi</th>
+                                    <th class="text-center">Author</th>
+                                    <th class="text-center">Tanggal</th>
+                                    <th class="text-center">Actions</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -208,6 +229,38 @@
 <!-- inject:js -->
 <script src="{{ asset('admindashboard/assets/js/material.js')}}"></script>
 <script src="{{ asset('admindashboard/assets/js/misc.js')}}"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+<script>
+  new DataTable('#example', {
+    initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                let title = column.footer().textContent;
+ 
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.footer().replaceChildren(input);
+ 
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                    if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                    }
+                });
+            });
+    },
+    fixedHeader: {
+        footer: true
+    }
+});
+</script>
 
 
 

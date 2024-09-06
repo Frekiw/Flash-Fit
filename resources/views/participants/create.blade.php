@@ -39,9 +39,21 @@
                             <option value="trainer">Trainer</option>
                         </select>
                     </div>
+                    <label for="time" class=" mt-3">Code Sales</label>
+                    <div class="input-group input-group-outline w-100">
+                        <input type="text" name="code_sales" class="form-control" id="code_sales" placeholder="Masukkan Code Sales">
+                    </div>
+                    <label for="time" class=" mt-3">Code Referal</label>
+                    <div class="input-group input-group-outline w-100">
+                        <input type="text" name="code_referal" class="form-control" id="code_referal" placeholder="Masukkan Code Referal">
+                    </div>
                     <label for="time" class=" mt-3">Nama</label>
                     <div class="input-group input-group-outline w-100">
                         <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan Nama">
+                    </div>
+                    <label for="time" class=" mt-3">Email</label>
+                    <div class="input-group input-group-outline w-100">
+                        <input type="text" name="email" class="form-control" id="email" placeholder="Masukkan Email">
                     </div>
                     <label for="time" class=" mt-3">Tanggal Lahir</label>
                     <div class="input-group input-group-outline w-100">
@@ -60,8 +72,7 @@
                                 <option value="{{ $pkg->id_packaged }}" 
                                         data-category="{{ $pkg->category }}" 
                                         data-name="{{ $pkg->name }}"
-                                        data-monthly="{{ $pkg->monthly }}"
-                                        data-yearly="{{ $pkg->yearly }}" >
+                                        data-price="{{ $pkg->price }}">
                                     {{ $pkg->category }} ({{ $pkg->name }})
                                 </option>
                                 @endforeach
@@ -79,16 +90,6 @@
                                 <div class="input-group input-group-outline w-100">
                                     <input type="text" name="name_m" class="form-control" id="name_m" placeholder="Masukkan Nama Membership" readonly>
                                 </div>
-                            </div>
-                        </div>
-                        <label for="time" class="mt-3">Kategori Harga</label>
-                        <div class="col-12">
-                            <div class="toggle-radio" id="radio" data-style="rounded" data-color="green">
-                                <input type="radio" name="harga_kategori" id="yearly" value="yearly">
-                                <label for="yearly">Yearly</label>
-    
-                                <input type="radio" name="harga_kategori" id="monthly" value="monthly" checked>
-                                <label for="monthly">Monthly</label>
                             </div>
                         </div>
                         <label for="time" class="mt-3">Harga Membership</label>
@@ -160,8 +161,7 @@
     const categoryField = document.getElementById('category_m');
     const nameField = document.getElementById('name_m');
     const hargaField = document.getElementById('harga_m');
-    const yearlyRadio = document.getElementById('yearly');
-    const monthlyRadio = document.getElementById('monthly');
+    const PriceRadio = document.getElementById('price');
     const radioGroup = document.getElementById('radio');
     const rolesMemberSection = document.querySelector('.roles-member');
     const rolesTrainerSection = document.querySelector('.roles-trainer');
@@ -170,17 +170,11 @@
         const selectedOption = packagedDropdown.options[packagedDropdown.selectedIndex];
         const category = selectedOption.getAttribute('data-category');
         const name = selectedOption.getAttribute('data-name');
-        const monthly = selectedOption.getAttribute('data-monthly');
-        const yearly = selectedOption.getAttribute('data-yearly');
+        const price = selectedOption.getAttribute('data-price');
 
         categoryField.value = category;
         nameField.value = name;
-
-        if (yearlyRadio.checked) {
-            hargaField.value = yearly;
-        } else {
-            hargaField.value = monthly;
-        }
+        hargaField.value = price;
     }
 
     function updateFormState() {

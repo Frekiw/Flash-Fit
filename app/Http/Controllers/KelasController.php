@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelas;
 use App\Models\Location;
+use App\Models\Jadwalkelas;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use App\Http\Requests\KelasRequest;
@@ -16,9 +17,15 @@ class KelasController extends Controller
      */
     public function index()
     {
+        $location = Location::all();
+        $jadwalkelas = Jadwalkelas::all();
+        $participant = Participant::where('roles', 'trainer')->get();
         $kelas = Kelas::all();
  
         return view('kelass.index', [
+         'location' => $location,
+         'jadwalkelas' => $jadwalkelas,
+         'participant' => $participant,
          'kelas' => $kelas
         ]);
     }

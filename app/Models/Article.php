@@ -11,7 +11,7 @@ class Article extends Model
     use HasFactory;
     protected $primaryKey = 'id_article';
     protected $fillable = [
-        'title','thumbnail','url'];
+        'title','thumbnail','url','content'];
     
     public function getCreatedAtAttribute($value)
     {

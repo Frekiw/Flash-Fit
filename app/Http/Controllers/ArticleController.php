@@ -41,10 +41,17 @@ class ArticleController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('assets/article', 'public');
             $data['thumbnail'] = $thumbnailPath;
         }
-        Article::create($data);
 
-        return redirect()->route('articles.index')->with('status','Berhasil Edit Data');
+        // Create the article without the final thumbnail URL
+        $article = Article::create($data);
+
+        // Update the thumbnail URL with the correct id_article
+        $article->url = 'https://flashfit.com/article/' . $article->id_article;
+        $article->save();
+
+        return redirect()->route('articles.index')->with('status', 'Berhasil Tambah Data');
     }
+
 
     /**
      * Display the specified resource.

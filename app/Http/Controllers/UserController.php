@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Trial;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
@@ -16,9 +17,13 @@ class UserController extends Controller
     public function index()
     {
         $user = User::paginate(100000);
+        $user2 = User::all();
+        $trial = Trial::with('user')->get();
 
         return view('accounts.index', [
-            'item' => $user
+            'item' => $user,
+            'user2' => $user2,
+            'trial' => $trial
            ]);
     }
 
@@ -42,6 +47,8 @@ class UserController extends Controller
             $profile_photo_pathPath = $request->file('profile_photo_path')->store('assets/user', 'public');
             $data['profile_photo_path'] = $profile_photo_pathPath;
             $data['password'] = Hash::make($request->password);
+            $randomDigits = mt_rand(1000, 9999);
+            $data['code_trial'] = 'TRL' . $randomDigits;
         }
 
 
@@ -94,4 +101,23 @@ class UserController extends Controller
     {
         //
     }
+
+    // app/Http/Controllers/UserController.php
+    public function hangus(Request $request, $id)
+    {
+        // Find the user by ID
+        $trial = Trial::find($id);
+
+        // Update the code_trial column to "Hangus"
+        if ($trial) {
+            $trial->status = 'Hangus';
+            $trial->save();
+        }
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Status berhasil diubah menjadi Hangus.');
+    }
+
+
+
 }

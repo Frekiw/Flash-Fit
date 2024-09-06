@@ -13,6 +13,10 @@
   .mdc-button.outlined-button--edit:not(:disabled) {
     color: #00ee47 !important;
   }
+  .ck-editor__editable_inline {
+            height: 400px;
+            width:100%;
+        }
 </style>
 <div class="page-wrapper mdc-toolbar-fixed-adjust">
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -24,7 +28,7 @@
             </div>
             <div class="modal-body">
                 @forelse ( $setting as $settings )
-                <textarea class="form-control w-100" id="notes" readonly>{{ $settings->tnc_cuti }}</textarea>
+                <textarea class="form-control w-100 " id="notes" readonly>{{ $settings->tnc_cuti }}</textarea>
                 @empty
                 @endforelse
               
@@ -48,7 +52,7 @@
                 @csrf
                 @method('PUT')
                 <label for="notes" class="fw-bold mt-3">Tnc Cuti</label>
-                <div class="input-group input-group-outline w-100">
+                <div class="w-100">
                     <textarea class="form-control w-100" name="tnc_cuti" id="notes2" value="{{ old('tnc_cuti') ?? $settings->tnc_cuti }}" placeholder="Masukkan Notes" required>{{$settings->tnc_cuti}}</textarea>
                 </div>
                 <button type="submit" class="btn btn-warning my-3">Submit</button>
@@ -59,6 +63,16 @@
         </div>
     </div>
   <main class="content-wrapper">
+    @if (session('status'))
+                <div class="row">
+                    <div class="col-md-4 ms-auto">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
     <div class="mdc-layout-grid">
         <div class="mdc-layout-grid__inner">
             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
@@ -74,7 +88,7 @@
                     </div>
                     
                     <div class="table-responsive">
-                        <table id="order-listing" class="table">
+                        <table id="example" class="table display">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nomor</th>
@@ -126,6 +140,16 @@
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                              <tr>
+                                  <th class="text-center">Nomor</th>
+                                  <th class="text-center">Nama</th>
+                                  <th class="text-center">Durasi Cuti</th>
+                                  <th class="text-center">Tanggal Pengajuan</th>
+                                  <th class="text-center">Status</th>
+                                  <th class="text-center">Actions</th>
+                              </tr>
+                          </tfoot>
                         </table>
                     </div>
                 </div>
@@ -157,12 +181,50 @@
 <script src="{{ asset('admindashboard/assets/js/misc.js')}}"></script>
 <!-- endinject -->
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+<script>
+  new DataTable('#example', {
+    initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                let title = column.footer().textContent;
+ 
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.footer().replaceChildren(input);
+ 
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                    if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                    }
+                });
+            });
+    },
+    fixedHeader: {
+        footer: true
+    }
+});
+</script>
 <script>
     ClassicEditor
     .create(document.querySelector('#notes'))
+    .then(editor => {
+        // Mengaktifkan mode readonly
+        editor.enableReadOnlyMode('readonly-mode');
+    })
     .catch(error => {
-    console.error(error);
+        console.error(error);
     });
+
+
     ClassicEditor
     .create(document.querySelector('#notes2'))
     .catch(error => {

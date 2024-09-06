@@ -21,10 +21,13 @@ class Participant extends Model
     
     protected $primaryKey = 'id_participant';
     protected $fillable = [
-        'tanggal','code','name','tgl_lahir','no_telp','category_m','harga_m','name_m','sales_id','packaged_id',
+        'tanggal','code','code_sales','code_referal','name','tgl_lahir','no_telp','category_m','harga_m','name_m','packaged_id',
         'roles','total_client','rating','instagram','foto_trainer','email'];
 
-        
+    public function package()
+    {
+        return $this->hasOne(Packaged::class,'id_packaged','packaged_id');
+    }
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timestamp;

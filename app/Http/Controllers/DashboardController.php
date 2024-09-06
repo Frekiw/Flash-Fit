@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Presence;
 use App\Models\Jadwalkelas;
 use App\Models\Participant;
-use App\Models\Trainerpresence;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\Trainerpresence;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -35,6 +37,31 @@ class DashboardController extends Controller
         $totalCuti = Cuti::count();
         $totalTrainerPresence = Trainerpresence::count();
         $totalUserPresence = Presence::count();
+        
+        // Mendapatkan tahun saat ini
+        $currentYear = Carbon::now()->year;
+
+        // Inisialisasi array untuk 12 bulan dengan nilai 0
+        $monthlyTotals = array_fill(0, 12, 0);
+
+        // Mengambil total harga per bulan di tahun ini
+        $results = DB::table('transactions')
+            ->select(DB::raw('MONTH(date) as month'), DB::raw('SUM(total) as total'))
+            ->whereYear('date', $currentYear)
+            ->where('status', 'approved')
+            ->groupBy(DB::raw('MONTH(date)'))
+            ->get();
+
+        // Mengisi array $monthlyTotals dengan hasil query
+        foreach ($results as $result) {
+            $monthlyTotals[$result->month - 1] = $result->total;
+        }
+
+        // Mengubah array menjadi string dengan format 0,0,0,...,0
+        $totalsString = implode(', ', $monthlyTotals);
+
+        // Menentukan total paling besar dari 12 bulan
+        $maxTotal = max($monthlyTotals);
 
         return view('dashboard', [
             'participant' => $participant,
@@ -45,8 +72,12 @@ class DashboardController extends Controller
             'totalCuti' => $totalCuti,
             'totalTrainerPresence' => $totalTrainerPresence,
             'totalUserPresence' => $totalUserPresence,
+            'monthlyTotals' => $monthlyTotals,
+            'totalsString' => $totalsString,
+            'maxTotal' => $maxTotal, // Menambahkan variabel baru ke dalam view
         ]);
     }
+
 
 
     /**

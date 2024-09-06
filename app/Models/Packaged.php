@@ -12,7 +12,7 @@ class Packaged extends Model
 
     protected $primaryKey = 'id_packaged';
     protected $fillable = [
-        'category','monthly','name','yearly','benefit'];
+        'category','name','price','benefit'];
     
     public function getCreatedAtAttribute($value)
     {

@@ -35,6 +35,7 @@ class UserController extends Controller
 
             //Jika hash tidak sesuai maka beri error 
             $user = User::where('email', $request->email)
+            ->with(['member','member.package'])
             ->first();
             if(!Hash::check($request->password, $user->password, [])) {
                 throw new \Exception('Invalid Credentials');
@@ -60,7 +61,7 @@ class UserController extends Controller
     public function fetch(Request $request)
     {
         $user = $request->user();
-        
+
         return ResponseFormatter::success(
             $user,
             'Data Profile User Berhasil Diambil'
@@ -76,13 +77,25 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-        $data = $request->all();
-
         $user = Auth::user();
+
+        // Ambil data lama
+        $oldName = $user->name;
+        $oldEmail = $user->email;
+
+        // Simpan data lama ke dalam revoke_akun
+        $user->revoke_akun = $oldName . ' [' . $oldEmail . ']';
+
+        // Update data pengguna dengan data baru
+        $data = $request->all();
         $user->update($data);
+
+        // Simpan perubahan pada revoke_akun setelah update data
+        $user->save();
 
         return ResponseFormatter::success($user, 'Profile Updated');
     }
+
 
     public function updatePhoto (Request $request)
     {

@@ -27,7 +27,7 @@ class ParticipantController extends Controller
         // Calculate total_mgm for each participant
         $totalMgm = [];
         foreach ($participant as $item) {
-            $totalMgm[$item->id_participant] = User::where('code_refal', $item->code)->count();
+            $totalMgm[$item->id_participant] = Participant::where('code_referal', $item->code)->count();
         }
     
         return view('participants.index', compact('sales','participant','packaged','presence','totalMgm'));

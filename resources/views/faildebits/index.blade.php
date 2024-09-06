@@ -44,7 +44,7 @@
                         </option>
                         @endforeach
                     </select>
-                    <label for="nama" class="fw-bold mt-3">Tanggal</label>
+                    <label for="nama" class="fw-bold mt-3">Bulan</label>
                     <?php
                     // Get the current year and month
                     $currentYear = date('Y');
@@ -52,7 +52,7 @@
                     ?>
                    <div class="input-group input-group-outline w-100">
                     <input type="month" name="date" class="form-control" id="monthInput"
-                           placeholder="Masukkan Tanggal" value="<?php echo $currentYear . '-' . $currentMonth; ?>" readonly>
+                           placeholder="Masukkan Bulan" value="<?php echo $currentYear . '-' . $currentMonth; ?>" readonly>
                     </div>
                 
                     <button type="submit" class="btn btn-warning my-3">Submit</button>
@@ -77,12 +77,12 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table id="order-listing" class="table">
+                        <table id="example" class="table display">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nomor</th>
                                     <th class="text-center">Nama</th>
-                                    <th class="text-center">Tanggal</th>
+                                    <th class="text-center">Bulan</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -94,7 +94,7 @@
                                       {{ $faildebits->user->name }}
                                     </td>
                                     <td class="text-center">
-                                      {{ $faildebits->date }}
+                                      {{ \Carbon\Carbon::parse($faildebits->date)->format('F Y') }}
                                     </td>
                                     <td>
                                      <div class="d-flex justify-content-center align-items-center">
@@ -109,6 +109,14 @@
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                              <tr>
+                                  <th class="text-center">Nomor</th>
+                                  <th class="text-center">Nama</th>
+                                  <th class="text-center">Bulan</th>
+                                  <th class="text-center">Actions</th>
+                              </tr>
+                          </tfoot>
                         </table>
                     </div>
                 </div>
@@ -146,7 +154,37 @@
 <script src="{{ asset('admindashboard/assets/js/material.js')}}"></script>
 <script src="{{ asset('admindashboard/assets/js/misc.js')}}"></script>
 
-
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+<script>
+  new DataTable('#example', {
+    initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                let title = column.footer().textContent;
+ 
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.footer().replaceChildren(input);
+ 
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                    if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                    }
+                });
+            });
+    },
+    fixedHeader: {
+        footer: true
+    }
+});
+</script>
 
 
 </body>

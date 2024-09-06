@@ -29,24 +29,20 @@
                     @csrf
                     <label for="title" class=" mt-3">Category</label>
                     <div class="input-group input-group-outline w-100">
-                        <input type="text" name="category" class="form-control" id="category" placeholder="Masukkan category" >
+                        <input type="text" name="category" class="form-control" id="category" placeholder="Masukkan Kategori Paket" >
                     </div>
                 
                     <label for="time" class=" mt-3">Name</label>
                     <div class="input-group input-group-outline w-100">
-                        <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan name">
+                        <input type="text" name="name" class="form-control" id="name" placeholder="Masukkan Nama Paket">
                     </div>
-                    <label for="time" class=" mt-3">Monthly</label>
+                    <label for="time" class=" mt-3">Total Harga</label>
                     <div class="input-group input-group-outline w-100">
-                        <input type="text" name="monthly" class="form-control" id="monthly" placeholder="Masukkan monthly">
-                    </div>
-                    <label for="time" class=" mt-3">Yearly</label>
-                    <div class="input-group input-group-outline w-100">
-                        <input type="text" name="yearly" class="form-control" id="yearly" placeholder="Masukkan yearly">
+                        <input type="text" name="price" class="form-control" id="price" placeholder="Masukkan Total Harga">
                     </div>
                     <label for="time" class=" mt-3">Benefit</label>
                     <div class="input-group input-group-outline w-100">
-                        <textarea type="text" name="benefit" class="form-control" id="benefit" placeholder="Masukkan benefit"></textarea>
+                        <textarea type="text" name="benefit" class="form-control" id="benefit" placeholder="Masukkan Benefit Paket"></textarea>
                     </div>
                     <button type="submit" class="btn btn-success my-3">Submit</button>
                   </form>

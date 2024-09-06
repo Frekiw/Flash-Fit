@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Sales;
 use Illuminate\Http\Request;
 use App\Http\Requests\SalesRequest;
+use App\Models\Participant;
 
 class SalesController extends Controller
 {
@@ -19,7 +20,7 @@ class SalesController extends Controller
     
         // Loop through each sales record to count the total clients
         foreach ($sales as $sale) {
-            $sale->Total_client = User::where('code_sales', $sale->code_sales)->count();
+            $sale->Total_client = Participant::where('code_sales', $sale->code_sales)->count();
         }
     
         // Pass the sales data to the view

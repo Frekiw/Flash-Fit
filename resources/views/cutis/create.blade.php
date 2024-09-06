@@ -16,7 +16,7 @@
             <i>Tambah Data Cuti</i>
           </li>
         </ol>
-      </nav>
+    </nav>
     <div class="container">
         <div class="row my-3">
             <div class="col-md-12">
@@ -27,8 +27,17 @@
                 <div class="card-body">
                   <form action="{{ route('cutis.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    
-                    
+                    <div class="form-group mt-3">
+                        <label for="user_id">Nama Member</label>
+                        <select name="user_id" id="user_id" class="form-control select2" required>
+                            <option value="">Pilih User</option>
+                            @foreach($user as $usr)
+                            <option value="{{ $usr->id }}">
+                                {{ $usr->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
                     <label for="durasi_cuti" class=" mt-3">Durasi Cuti</label>
                     <ul class="nav nav-pills mb-3 mt-3" id="pills-tab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -149,7 +158,7 @@
 <script>
     $(document).ready(function() {
         $('#user_id').select2({
-            placeholder: "Pilih Kategori",
+            placeholder: "Pilih Member",
             allowClear: true
         });
     });

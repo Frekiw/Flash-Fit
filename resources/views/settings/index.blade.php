@@ -16,50 +16,42 @@
 </style>
 <div class="page-wrapper mdc-toolbar-fixed-adjust">
   <main class="content-wrapper">
+    @if (session('status'))
+                <div class="row">
+                    <div class="col-md-4 ms-auto">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
     <div class="container">
         <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center py-3">
-                  <h4>Setting</h4>
+                  <h4>Terms And Conditions</h4>
                   @foreach ($setting as $item)
-                  <a href="{{ route('settings.edit',$item-> id_setting) }}" class="py-1 btn btn-success mx-2 p-2 text-center">Edit Setting</a>
+                  <a href="{{ route('settings.edit',$item-> id_setting) }}" class="py-1 btn btn-success mx-2 p-2 text-center">Edit TnC</a>
                 </div>
                 <div class="card-body ">
-                    <div class="row">
-                        <div class="col-md-6">
-                          <label for="notes" class="fw-bold mt-3">Banner</label>
-                          <div class="input-group input-group-outline">
-                              <textarea class="form-control" name="banner" id="banner" placeholder="Masukkan Banner">{{ $item->banner }}</textarea>
+                          <label for="notes" class="fw-bold mt-3">TNC DAFTAR 1</label>
+                          <div class="w-100">
+                              <textarea class="form-control" name="tnc_daftar1" id="notes2" placeholder="Masukkan TNC DAFTAR 2">{{ $item->tnc_daftar1 }}</textarea>
                           </div>
-                        </div>
-                        <div class="col-md-6">
-                          <label for="notes" class="fw-bold mt-3">Banner 2</label>
-                          <div class="input-group input-group-outline">
-                              <textarea class="form-control w-100" name="banner2" id="banner2" placeholder="Masukkan Banner 2">{{ $item->banner2 }}</textarea>
+                          <label for="notes" class="fw-bold mt-3">TNC DAFTAR 2</label>
+                          <div class="w-100">
+                              <textarea class="form-control w-100" name="tnc_daftar2" id="notes3" placeholder="Masukkan TNC DAFTAR 2">{{ $item->tnc_daftar2 }}</textarea>
                           </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                          <label for="notes" class="fw-bold mt-3">Promo_Pt</label>
-                          <div class="input-group input-group-outline">
-                              <textarea class="form-control w-100" name="promo_pt" id="promo_pt" placeholder="Masukkan Promo PT">{{ $item->promo_pt }}</textarea>
+                          <label for="notes" class="fw-bold mt-3">TNC DAFTAR 3</label>
+                          <div class="w-100">
+                              <textarea class="form-control w-100" name="tnc_daftar3" id="notes4" placeholder="Masukkan TNC DAFTAR 3">{{ $item->tnc_daftar3 }}</textarea>
                           </div>
-                        </div>
-                        <div class="col-md-6">
-                          <label for="notes" class="fw-bold mt-3">Required</label>
-                          <div class="input-group input-group-outline">
-                              <textarea class="form-control w-100" name="promo_membership" id="promo_membership" placeholder="Masukkan Promo Membership">{{ $item->promo_membership }}</textarea>
+                          <label for="notes" class="fw-bold mt-3">TNC Personal Trainer</label>
+                          <div class="w-100">
+                              <textarea class="form-control w-100" name="tnc_pt" id="notes5" placeholder="Masukkan Tnc Trainer">{{ $item->tnc_pt }}</textarea>
                           </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="notes" class="fw-bold mt-3">Tnc Daftar</label>
-                        <div class="input-group input-group-outline">
-                            <textarea class="form-control w-100" name="tnc_daftar" id="notes" placeholder="Masukkan Tnc Daftar">{{ $item->tnc_daftar }}</textarea>
-                        </div>
-                    </div>
                 @endforeach              
                 </div>
               </div>
@@ -220,7 +212,36 @@
         console.error(error);
       });
   });
-
+     document.addEventListener("DOMContentLoaded", function() {
+    ClassicEditor
+      .create(document.querySelector('#notes3'))
+      .then(editor => {
+        editor.enableReadOnlyMode('readOnlyMode');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  });
+     document.addEventListener("DOMContentLoaded", function() {
+    ClassicEditor
+      .create(document.querySelector('#notes4'))
+      .then(editor => {
+        editor.enableReadOnlyMode('readOnlyMode');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  });
+     document.addEventListener("DOMContentLoaded", function() {
+    ClassicEditor
+      .create(document.querySelector('#notes5'))
+      .then(editor => {
+        editor.enableReadOnlyMode('readOnlyMode');
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  });
 </script>
 
 

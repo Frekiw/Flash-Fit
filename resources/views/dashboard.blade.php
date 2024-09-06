@@ -37,7 +37,7 @@
                         </div>
                       </div>
                       <div class="mt-3">
-                        <button type="button" class="btn btn-dark px-5 w-100">Lihat Selengkapnya</button>
+                        <a type="button" class="btn btn-dark px-5 w-100" href="{{ route('participants.index') }}">Lihat Selengkapnya</a>
                       </div>
                       {{-- <p class="m-0 text-muted tx-12"> You have a 23% growth in comparison with last month. </p> --}}
                     </div>
@@ -977,6 +977,123 @@
         // These labels appear in the legend and in the tooltips when hovering different arcs
         labels: []
       };
+</script>
+<script>
+    if ($("#total-expences").length) {
+      var graphGradient = document
+        .getElementById("total-expences")
+        .getContext("2d");
+      var saleGradientBg = graphGradient.createLinearGradient(25, 0, 25, 83);
+      saleGradientBg.addColorStop(0, "rgba(6, 179, 175, .83)");
+      saleGradientBg.addColorStop(1, "rgba(255, 255, 255, 0.27)");
+      var totalExpencesData = {
+        labels: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec"
+        ],
+        datasets: [
+          {
+            label: "Income",
+            data: [{{ $totalsString }}],
+            backgroundColor: saleGradientBg,
+            borderColor: ["#59c99f"],
+            borderWidth: 3,
+            fill: true,
+            pointBorderColor: [
+                <?php
+                    $currentMonth = date('n'); // 'n' returns month without leading zeros
+                    for ($i = 1; $i <= 12; $i++) {
+                        echo ($currentMonth == $i) ? '"#59c99f",' : '"",';
+                    }
+                ?>
+            ],
+            pointBackgroundColor: [
+                <?php
+                    $currentMonth = date('n'); // 'n' returns month without leading zeros
+                    for ($i = 1; $i <= 12; $i++) {
+                        echo ($currentMonth == $i) ? '"#fff",' : '"",';
+                    }
+                ?>
+            ],
+            pointBorderWidth: [3],
+            pointRadius: [
+                <?php
+                    $currentMonth = date('n'); // 'n' returns month without leading zeros
+                    for ($i = 1; $i <= 12; $i++) {
+                        echo ($currentMonth == $i) ? '3,' : '0,';
+                    }
+                ?>
+            ]
+          }
+        ]
+      };
+      var totalExpencesOptions = {
+        scales: {
+          yAxes: [
+            {
+              display: false,
+              gridLines: {
+                drawBorder: false,
+                display: false,
+                drawTicks: false
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: {{ $maxTotal }}
+              }
+            }
+          ],
+          xAxes: [
+            {
+              display: false,
+              position: "bottom",
+              gridLines: {
+                drawBorder: false,
+                display: false,
+                drawTicks: false
+              },
+              ticks: {
+                beginAtZero: true,
+                stepSize: 1
+              }
+            }
+          ]
+        },
+        legend: {
+          display: false
+        },
+        elements: {
+          point: {
+            radius: 0
+          },
+          line: {
+            tension: 0.3
+          }
+        },
+        tooltips: {
+          backgroundColor: "rgba(2, 171, 254, 1)"
+        }
+      };
+      var barChartCanvas = $("#total-expences")
+        .get(0)
+        .getContext("2d");
+      // This will get the first returned node in the jQuery collection.
+      var barChart = new Chart(barChartCanvas, {
+        type: "line",
+        data: totalExpencesData,
+        options: totalExpencesOptions
+      });
+    }
 </script>
 </body>
 </html>

@@ -14,6 +14,7 @@ use App\Http\Controllers\API\VoucherController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\PackagedController;
 use App\Http\Controllers\API\JadwalkelasController;
+use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\API\NotificationController;
 
 /*
@@ -42,6 +43,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('kelas', [KelasController::class, 'all']);
     Route::get('notification', [NotificationController::class, 'all']);
     Route::get('location', [LocationController::class, 'all']);
+    Route::get('transaction', [TransactionController::class, 'all']);
 });
 
 Route::post('login', [UserController::class, 'login']);

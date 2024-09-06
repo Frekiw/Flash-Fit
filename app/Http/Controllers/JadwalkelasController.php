@@ -21,7 +21,7 @@ class JadwalkelasController extends Controller
         $jadwalkelas = Jadwalkelas::all();
         $participant = Participant::where('roles', 'trainer')->get();
  
-        return view('jadwalkelass.index', [
+        return view('kelass.index', [
          'location' => $location,
          'jadwalkelas' => $jadwalkelas,
          'participant' => $participant,
@@ -45,7 +45,7 @@ class JadwalkelasController extends Controller
 
         Jadwalkelas::create($data);
 
-        return redirect()->route('jadwalkelass.index')->with('status','Berhasil Tambah Data');
+        return redirect()->route('kelass.index')->with('status','Berhasil Tambah Data');
     }
 
 
@@ -82,7 +82,7 @@ class JadwalkelasController extends Controller
         
         $jadwalkelas->update($data);
         
-        return redirect()->route('jadwalkelass.index')->with('status','Berhasil Edit Data');
+        return redirect()->route('kelass.index')->with('status','Berhasil Edit Data');
     }
 
     /**
@@ -95,7 +95,7 @@ class JadwalkelasController extends Controller
             Storage::delete('public/' . $jadwalkelas->photo);
         }
         $jadwalkelas->delete();
-        return redirect()->route('jadwalkelass.index')->with('status', 'Berhasil Hapus Data');
+        return redirect()->route('kelass.index')->with('status', 'Berhasil Hapus Data');
     }
 
     public function jadwallocation($id)

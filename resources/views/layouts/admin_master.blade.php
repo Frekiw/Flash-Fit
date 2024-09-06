@@ -26,6 +26,8 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
       <link rel="stylesheet" href="{{ asset ('admindashboard/assets/vendors/datatables/css/jquery.dataTables.min.css') }}"/>
+      <link rel="stylesheet" href="https://cdn.datatables.net/2.1.4/css/dataTables.dataTables.css">
+      <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/4.0.1/css/fixedHeader.dataTables.css">
       <!-- Layout styles -->
       <link rel="stylesheet" href="{{ asset('admindashboard/assets/css/demo_1/style.css')}}" />
       <!-- End layout styles -->
@@ -56,18 +58,63 @@
                 </a>
               </div>
               <div class="mdc-drawer-title">
-                MEMBERSHIPS
+                FEATURE
               </div>
               <div class="mdc-list-item mdc-drawer-item">
                 <a class="mdc-drawer-link {{ request()->is('dashboard/cutis*') || request()->is('dashboard/cutis.edit*') || request()->is('dashboard/cutis.create*') ? 'activa' : '' }}" href="{{ route('cutis.index') }}">
                   <i class="fas me-2 fa-snowflake" aria-hidden="true"></i>
-                  Cuti
+                  Freeze
+                </a>
+              </div>
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link {{ request()->is('dashboard/jadwal_trainings') ? 'activa' : '' }}" href="{{ route('jadwal_trainings.index') }}">
+                  <i class="fas me-2 fa-running" aria-hidden="true"></i>
+                  Jadwal Training
+                </a>
+              </div>
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link {{ request()->is('dashboard/kelass') ? 'activa' : '' }}" href="{{ route('kelass.index') }}">
+                  <i class="fas me-2 fa-chalkboard-teacher" aria-hidden="true"></i>
+                  Kelas
+                </a>
+              </div>
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link {{ request()->is('dashboard/locations') ? 'activa' : '' }}" href="{{ route('locations.index') }}">
+                  <i class="fas me-2 fa-map-marker-alt" aria-hidden="true"></i>
+                  Location
                 </a>
               </div>
               <div class="mdc-list-item mdc-drawer-item">
                 <a class="mdc-drawer-link {{ request()->is('dashboard/packageds*') || request()->is('dashboard/packageds.edit*') || request()->is('dashboard/packageds.create*') ? 'activa' : '' }}" href="{{ route('packageds.index') }}">
                   <i class="fas me-2 fa-box" aria-hidden="true"></i>
                   Packaged
+                </a>
+              </div>
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link {{ request()->is('dashboard/transactions') ? 'activa' : '' }}" href="{{ route('transactions.index') }}">
+                  <i class="fas me-2 fa-exchange-alt" aria-hidden="true"></i>
+                  Transaction
+                </a>
+              </div>
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link {{ request()->is('dashboard/vouchers') ? 'activa' : '' }}" href="{{ route('vouchers.index') }}">
+                  <i class="fas me-2 fa-gift" aria-hidden="true"></i>
+                  Voucher
+                </a>
+              </div>
+              <div class="mdc-drawer-title">
+                USER MANAGEMENT
+              </div>
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link {{ request()->is('dashboard/accounts') ? 'activa' : '' }}" href="{{ route('accounts.index') }}">
+                  <i class="fas me-2 fa-user" aria-hidden="true"></i>
+                  Account
+                </a>
+              </div>
+              <div class="mdc-list-item mdc-drawer-item">
+                <a class="mdc-drawer-link {{ request()->is('dashboard/participants') ? 'activa' : '' }}" href="{{ route('participants.index') }}">
+                  <i class="fas me-2 fa-users-cog" aria-hidden="true"></i>
+                  Member
                 </a>
               </div>
               <div class="mdc-list-item mdc-drawer-item">
@@ -82,82 +129,19 @@
                   Trainer
                 </a>
               </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/transactions') ? 'activa' : '' }}" href="{{ route('transactions.index') }}">
-                  <i class="fas me-2 fa-exchange-alt" aria-hidden="true"></i>
-                  Transaction
-                </a>
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/participants') ? 'activa' : '' }}" href="{{ route('participants.index') }}">
-                  <i class="fas me-2 fa-users-cog" aria-hidden="true"></i>
-                  User
-                </a>
-              </div>
-              <div class="mdc-drawer-title">
-                PROMO
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/vouchers') ? 'activa' : '' }}" href="{{ route('vouchers.index') }}">
-                  <i class="fas me-2 fa-gift" aria-hidden="true"></i>
-                  Voucher
-                </a>
-              </div>
               <div class="mdc-drawer-title">
                 SETTING
               </div>
               <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/accounts') ? 'activa' : '' }}" href="{{ route('accounts.index') }}">
-                  <i class="fas me-2 fa-user" aria-hidden="true"></i>
-                  Account
-                </a>
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/articles') ? 'activa' : '' }}" href="{{ route('articles.index') }}">
-                  <i class="fas me-2 fa-newspaper" aria-hidden="true"></i>
-                  Article
-                </a>
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/banners') ? 'activa' : '' }}" href="{{ route('banners.index') }}">
-                  <i class="fas me-2 fa-image" aria-hidden="true"></i>
-                  Banner
-                </a>
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/kelass') ? 'activa' : '' }}" href="{{ route('kelass.index') }}">
-                  <i class="fas me-2 fa-chalkboard-teacher" aria-hidden="true"></i>
-                  Kelas
-                </a>
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/jadwalkelass') ? 'activa' : '' }}" href="{{ route('jadwalkelass.index') }}">
-                  <i class="fas me-2 fa-list" aria-hidden="true"></i>
-                  Jadwal Kelas
-                </a>
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/locations') ? 'activa' : '' }}" href="{{ route('locations.index') }}">
-                  <i class="fas me-2 fa-map-marker-alt" aria-hidden="true"></i>
-                  Location
+                <a class="mdc-drawer-link {{ request()->is('dashboard/cmss') ? 'activa' : '' }}" href="{{ route('cmss.index') }}">
+                  <i class="fas me-2 fa-tachometer-alt" aria-hidden="true"></i>
+                  CMS
                 </a>
               </div>
               <div class="mdc-list-item mdc-drawer-item">
                 <a class="mdc-drawer-link {{ request()->is('dashboard/notifications') ? 'activa' : '' }}" href="{{ route('notifications.index') }}">
                   <i class="fas me-2 fa-bell" aria-hidden="true"></i>
                   Notification
-                </a>
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/tncs') ? 'activa' : '' }}" href="{{ route('tncs.index') }}">
-                  <i class="fas me-2 fa-file-alt" aria-hidden="true"></i>
-                  Terms And Condition
-                </a>
-              </div>
-              <div class="mdc-list-item mdc-drawer-item">
-                <a class="mdc-drawer-link {{ request()->is('dashboard/settings') ? 'activa' : '' }}" href="{{ route('settings.index') }}">
-                  <i class="fas me-2 fa-cog" aria-hidden="true"></i>
-                  Setting
                 </a>
               </div>
             </nav>
@@ -184,11 +168,11 @@
               <div class="menu-button-container menu-profile">
                 <button class="mdc-button mdc-menu-button">
                   <span class="d-flex align-items-center">
-                    <span class="figure">
-                      <img src="{{ asset('admindashboard/assets/images/faces/face1.jpg')}}" alt="user" clas="user" />
+                    <span class="figure" style="width: 40px; height:40px;">
+                      <img class="w-100 h-100" style="object-fit: cover;" src="{{ asset('storage/'.Auth::user()->profile_photo_path) }}" alt="user" class="user" />
                     </span>
-                    <span class="user-name">Christian Russell</span><i class="fas fa-chevron-down ms-2 text-dark" style="font-size: 0.7rem"></i>
-                  </span>
+                    <span class="user-name ms-2">{{ Auth::user()->name }}</span><i class="fas fa-chevron-down ms-2 text-dark" style="font-size: 0.7rem"></i>
+                    </span>
                 </button>
                 <div class="mdc-menu mdc-menu-surface" tabindex="-1">
                   <ul class="mdc-list" role="menu" aria-hidden="true" aria-orientation="vertical">
@@ -213,9 +197,9 @@
                       <div class="item-content d-flex align-items-start flex-column justify-content-center">
                         <form method="POST" action="{{ route('logout') }}">
                           @csrf
-                          <a type="submit">
+                          <button type="submit" class="border-0" style="background-color: #ffffff;">
                             <h6 class="item-subject font-weight-normal">Logout</h6>
-                          </a>
+                          </button>
                         </form>
                       </div>
                     </li>

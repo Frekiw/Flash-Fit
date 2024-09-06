@@ -26,13 +26,13 @@
             <div class="modal-body">
                 <form action="{{ route('kelass.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <label for="notes" class="fw-bold mt-3">Nama</label>
+                    <label for="notes" class="fw-bold mt-3">Nama Kelas</label>
                     <div class="input-group input-group-outline">
-                        <input class="form-control w-100" name="name" id="name" placeholder="Masukkan Nama">
+                        <input class="form-control w-100" name="name" id="name" placeholder="Masukkan Nama Kelas">
                     </div>
                     <label for="notes" class="fw-bold mt-3">Kalori</label>
                     <div class="input-group input-group-outline">
-                        <input class="form-control w-100" name="calories" id="calories" placeholder="Masukkan Kalori">
+                        <input type="number" class="form-control w-100" name="calories" id="calories" placeholder="Masukkan Kalori">
                     </div>
                     <label for="notes" class="fw-bold mt-3">Deskripsi</label>
                     <div class="input-group input-group-outline">
@@ -50,6 +50,17 @@
         </div>
     </div>
     <div class="mdc-layout-grid">
+      <div class="mdc-card my-3" style="background:#273444;">
+        <div class="text-white">
+            <h1>Jadwal Kelas</h1>
+        </div>
+        <div class="d-flex justify-content-start align-items-center bg-dark text-white py-2 pb-4 ">
+            @forelse ($location as $locations )
+            <a type="button" href="{{ route('location.detail',$locations->id_location) }}" class="btn btn-outline-success mx-2 rounded-pill">{{ $locations->name }}</a>
+            @empty
+            @endforelse
+        </div>
+      </div>
         <div class="mdc-layout-grid__inner">
             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
                 <div class="mdc-card">
@@ -60,7 +71,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table id="order-listing" class="table">
+                        <table id="example" class="table display">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nomor</th>
@@ -76,10 +87,12 @@
                                 <tr>
                                     <td class="text-center">{{ $kelass->id_kelas }}</td>
                                     <td class="text-center">{{ $kelass->name }}</td>
-                                    <td class="text-center">{{ $kelass->description }}</td>
+                                    <td class="text-center"><textarea cols="30" rows="2">{{ $kelass->description }}</textarea></td>
                                     <td class="text-center">{{ $kelass->calories }}</td>
                                     <td class="text-center">
-                                        <img class="rounded" style="width: 100%; object-fit:cover; height:80px" src="{{  asset('storage/'.$kelass->picture) }}" alt="">
+                                        <div class="" style="width: 70px; height:50px;">
+                                          <img class="rounded" style="width: 100%; object-fit:cover; height:100%" src="{{  asset('storage/'.$kelass->picture) }}" alt="">
+                                        </div>
                                     </td>
                                     <td>
                                      <div class="d-flex justify-content-center align-items-center">
@@ -96,6 +109,16 @@
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                              <tr>
+                                  <th class="text-center">Nomor</th>
+                                  <th class="text-center">Nama</th>
+                                  <th class="text-center">Description</th>
+                                  <th class="text-center">Kalori</th>
+                                  <th class="text-center">Foto</th>
+                                  <th class="text-center">Actions</th>
+                              </tr>
+                          </tfoot>
                         </table>
                     </div>
                 </div>
@@ -114,13 +137,13 @@
                 <form action="{{ route('kelass.update', $kelass->id_kelas) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
-                <label for="notes" class="fw-bold mt-3">Nama</label>
+                <label for="notes" class="fw-bold mt-3">Nama Kelas</label>
                 <div class="input-group input-group-outline">
-                    <input class="form-control w-100" value="{{ old('name') ?? $kelass->name }}" name="name" id="name" placeholder="Masukkan Nama">
+                    <input class="form-control w-100" value="{{ old('name') ?? $kelass->name }}" name="name" id="name" placeholder="Masukkan Nama Kelas">
                 </div>
                 <label for="notes" class="fw-bold mt-3">Kalori</label>
                 <div class="input-group input-group-outline">
-                    <input class="form-control w-100" value="{{ old('calories') ?? $kelass->calories }}" name="calories" id="calories" placeholder="Masukkan Kalori">
+                    <input type="number" class="form-control w-100" value="{{ old('calories') ?? $kelass->calories }}" name="calories" id="calories" placeholder="Masukkan Kalori">
                 </div>
                 <label for="notes" class="fw-bold mt-3">Deskripsi</label>
                 <div class="input-group input-group-outline">
@@ -131,16 +154,15 @@
                     <img class="w-100 h-100 object-fit-cover" src="{{  asset('storage/'.$kelass->picture) }}" alt="">
                 </div>
                 <div class="input-group input-group-outline w-100">
-                    <input type="file" name="picture" class="form-control" id="picture" placeholder="Masukkan Gambar"
-                        required>
+                    <input type="file" name="picture" class="form-control" id="picture" placeholder="Masukkan Gambar">
                 </div>  
                 <button type="submit" class="btn btn-warning my-3">Submit</button>
                 </form>
-                @endforeach
                 </div>
             </div>
         </div>
     </div>
+    @endforeach
 </main>
   <!-- partial:admindashboard/admindashboard/partials/_footer.html -->
   <footer>
@@ -170,6 +192,39 @@
 <!-- inject:js -->
 <script src="{{ asset('admindashboard/assets/js/material.js')}}"></script>
 <script src="{{ asset('admindashboard/assets/js/misc.js')}}"></script>
+
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+<script>
+  new DataTable('#example', {
+    initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                let title = column.footer().textContent;
+ 
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.footer().replaceChildren(input);
+ 
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                    if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                    }
+                });
+            });
+    },
+    fixedHeader: {
+        footer: true
+    }
+});
+</script>
 
 
 

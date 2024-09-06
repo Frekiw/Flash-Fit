@@ -18,15 +18,13 @@
                   <a href="{{ route('tncs.edit',$item-> id_tnc) }}" class="py-1 btn btn-success mx-2 p-2 text-center">Edit TNC</a>
                 </div>
                 <div class="card-body ">
-                    <div class="row w-100">
-                        <label for="notes" class="fw-bold mt-3">Required</label>
-                        <div class="input-group input-group-outline">
-                            <textarea class="form-control w-100" name="required" id="notes" placeholder="Masukkan Narasi">{{ $item->required }}</textarea>
-                        </div>
+                    <label for="notes" class="fw-bold mt-3">Syarat Dan Ketentuan</label>
+                    <div class="w-100">
+                        <textarea class="form-control" name="required" id="notes" placeholder="Masukkan Narasi">{{ $item->required }}</textarea>
                     </div>
                     <label for="notes" class="fw-bold mt-3">Kebijakan Dan Privasi</label>
-                    <div class="input-group input-group-outline">
-                      <textarea class="form-control w-100" name="policy" id="notes2" placeholder="Masukkan Narasi">{{ $item->policy }}</textarea>
+                    <div class="w-100">
+                      <textarea class="form-control" name="policy" id="notes2" placeholder="Masukkan Narasi">{{ $item->policy }}</textarea>
                     </div>
                 @endforeach              
                 </div>

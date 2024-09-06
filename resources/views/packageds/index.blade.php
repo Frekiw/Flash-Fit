@@ -16,6 +16,16 @@
 </style>
 <div class="page-wrapper mdc-toolbar-fixed-adjust">
   <main class="content-wrapper">
+    @if (session('status'))
+                <div class="row">
+                    <div class="col-md-4 ms-auto">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
     <div class="mdc-layout-grid">
         <div class="mdc-layout-grid__inner">
             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
@@ -38,9 +48,6 @@
                                             <img class="w-100 h-100 " style="filter:grayscale(1)" src="{{ asset('admindashboard/assets/images/logo.png') }}" alt="">
                                         </div>
                                     </div>
-                                    <div class="position-absolute bottom-0 end-0 p-2">
-                                        <h6 class="fw-bold">{{ $item->monthly }}</h6>
-                                    </div>
                                 </div>
                                 <div class="col-md-12 py-2">
                                     <div class="d-flex justify-content-start align-items-center px-2 card-bnft">
@@ -55,7 +62,7 @@
                                     <div class="px-2 mb-2">
                                         <div class="">
                                             <small class="text-secondary">Total harga</small>
-                                            <h5 class="text-dark fw-bold">{{ $item->yearly }}</h5>
+                                            <h5 class="text-dark fw-bold">{{ $item->price }}</h5>
                                         </div>
                                         <div class="d-flex mb-2 p-0">
                                             <a href="{{ route('packageds.edit',$item-> id_packaged) }}" type="button" class="btn btn-success text-dark px-4 w-100 fw-bold"><small>Edit</small></a>

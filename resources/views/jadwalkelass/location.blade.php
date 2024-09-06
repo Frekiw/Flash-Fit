@@ -23,7 +23,7 @@
             </a>
           </li>
           <li class="breadcrumb-item">
-            <a class="" href="{{ route('jadwalkelass.index') }}">Jadwal Kelas</a>
+            <a class="" href="{{ route('kelass.index') }}">Kelas</a>
           </li>
           <li class="breadcrumb-item active text-secondary">
             <i>Lokasi</i>
@@ -151,7 +151,7 @@
                                 for ($i = 0; $i < 7; $i++) {
                                     $currentDay = clone $startOfWeek;
                                     $currentDay->modify("+$i day");
-                                    $weekDates[] = $currentDay->format('Y-m-d');
+                                    $weekDates[] = $currentDay;
                                 }
                                 
                                 // Days of the week in Indonesian
@@ -161,28 +161,29 @@
                                 for ($i = 0; $i < 7; $i++) {
                                     echo "<tr>";
                                     echo "<td>" . $daysOfWeek[$i] . "</td>";
-                                    echo "<td>" . $weekDates[$i] . "</td>";
+                                    
+                                    // Format the date as 19-Aug-2024
+                                    $formattedDate = $weekDates[$i]->format('d-M-Y');
+                                    echo "<td>" . $formattedDate . "</td>";
                                 
                                     // Find the kelas for this date
                                     $kelasForDate = $jadwalkelas->filter(function ($item) use ($weekDates, $i) {
-                                        return $item->date == $weekDates[$i];
+                                        return $item->date == $weekDates[$i]->format('Y-m-d');
                                     });
                                 
                                     // Prepare buttons for classes
                                     $buttons = $kelasForDate->map(function ($kelas) {
                                         $jenisKelas = $kelas->jeniskelass->name;
-                                        $idKelas = $kelas->id_jadwalkelas; // Use $kelas instead of $jadwalkelas
-                                        return "<div class='btn btn-outline-success rounded-pill mx-1 ms-0 px-3 py-2'>" 
-                                        . "<button type='button' data-bs-toggle='modal' data-bs-target='#EditModal$idKelas' class='border-0 rounded-circle text-dark'><i class='fas fa-edit'></i></button> "
+                                        $idKelas = $kelas->id_jadwalkelas;
+                                        return "<div class='btn btn-outline-success22 rounded-pill mx-1 ms-0 px-3 py-1'>" 
+                                        . "<button type='button' data-bs-toggle='modal' style='background-color:#A6FF00; color:#1E1F24;' data-bs-target='#EditModal$idKelas' class='border-0 rounded-circle text-dark'><i class='fas fa-edit'></i></button> "
                                         . "<form action='" . route('jadwalkelass.destroy', $idKelas) . "' onsubmit='return confirm(\"Apakah Anda Ingin Menghapus Data Ini?\")' method='POST' style='display:inline;'>"
                                         . method_field('DELETE')
                                         . csrf_field()
-                                        . "<button type='submit' class='border-0 rounded-circle text-dark'><i class='fas fa-trash p-0 m-0' style='font-size:0.8rem;'></i></button>"
+                                        . "<button type='submit' style='background-color:#A6FF00; color:#1E1F24;' class='border-0 rounded-circle text-dark'><i class='fas fa-trash p-0 m-0' style='font-size:0.8rem;'></i></button>"
                                         . "</form> "
                                         . htmlspecialchars($jenisKelas) 
                                         . "</div>";
-
-
                                     })->implode(' ');
                                 
                                     // Display class buttons and + Kelas link
@@ -192,7 +193,8 @@
                                     echo "</tr>";
                                 }
                                 ?>
-                                </tbody>
+                            </tbody>
+                            
                                                          
                             
                             

@@ -19,7 +19,7 @@
         <div class="modal-dialog modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Saless</h1>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Sales</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -40,6 +40,16 @@
         </div>
     </div>
   <main class="content-wrapper">
+    @if (session('status'))
+                <div class="row">
+                    <div class="col-md-4 ms-auto">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
     <div class="mdc-layout-grid">
         <div class="mdc-layout-grid__inner">
             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
@@ -51,7 +61,7 @@
                         </div>
                     </div>
                     <div class="table-responsive">
-                        <table id="order-listing" class="table">
+                        <table id="example" class="table display">
                             <thead>
                                 <tr>
                                     <th class="">Nomor</th>
@@ -94,6 +104,16 @@
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                              <tr>
+                                  <th class="">Nomor</th>
+                                  <th class="">Nama</th>
+                                  <th class="">Nomor Telepon</th>
+                                  <th class="">Code Sales</th>
+                                  <th class="">Total Client</th>
+                                  <th class="">Actions</th>
+                              </tr>
+                          </tfoot>
                         </table>
                     </div>
                 </div>
@@ -154,6 +174,38 @@
 <script src="{{ asset('admindashboard/assets/js/misc.js')}}"></script>
 <!-- endinject -->
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+<script>
+  new DataTable('#example', {
+    initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                let title = column.footer().textContent;
+ 
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.footer().replaceChildren(input);
+ 
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                    if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                    }
+                });
+            });
+    },
+    fixedHeader: {
+        footer: true
+    }
+});
+</script>
 </body>
 
 <!-- Mirrored from demo.bootstrapdash.com/caroline/template/demo_1/pages/tables/data-tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Jul 2024 03:20:08 GMT -->

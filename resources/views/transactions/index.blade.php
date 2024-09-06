@@ -16,6 +16,16 @@
 </style>
 <div class="page-wrapper mdc-toolbar-fixed-adjust">
   <main class="content-wrapper">
+    @if (session('status'))
+                <div class="row">
+                    <div class="col-md-4 ms-auto">
+                        <div class="alert alert-success alert-dismissible" role="alert">
+                            {{ session('status') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                </div>
+            @endif
     <div class="mdc-layout-grid">
         <div class="mdc-layout-grid__inner">
             <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
@@ -26,7 +36,7 @@
                         <h6 class="card-title card-padding pb-0">Data Transaction Pembayaran</h6>
                     </div>
                     <div class="table-responsive">
-                        <table id="order-listing" class="table">
+                        <table id="example1" class="table display">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nama</th>
@@ -75,6 +85,17 @@
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                              <tr>
+                                  <th class="text-center">Nama</th>
+                                  <th class="text-center">Tanggal</th>
+                                  <th class="text-center">Category</th>
+                                  <th class="text-center">Detail</th>
+                                  <th class="text-center">Total</th>
+                                  <th class="text-center">Status</th>
+                                  <th class="text-center">Actions</th>
+                              </tr>
+                          </tfoot>
                         </table>
                     </div>
                   </div> 
@@ -85,7 +106,7 @@
                         <h6 class="card-title card-padding pb-0">Data Transaction Trainer Sesi</h6>
                     </div>
                     <div class="table-responsive">
-                        <table id="order-listing" class="table">
+                        <table id="example2" class="table display">
                             <thead>
                                 <tr>
                                     <th class="text-center">Nomor</th>
@@ -131,6 +152,17 @@
                                 @empty
                                 @endforelse
                             </tbody>
+                            <tfoot>
+                              <tr>
+                                  <th class="text-center">Nomor</th>
+                                  <th class="text-center">Nama</th>
+                                  <th class="text-center">Sesi</th>
+                                  <th class="text-center">Status</th>
+                                  <th class="text-center">Total Sesi</th>
+                                  <th class="text-center">Jumlah Kehadiran</th>
+                                  <th class="text-center">Action</th>
+                              </tr>
+                          </tfoot>
                         </table>
                     </div>
                   </div>
@@ -250,6 +282,63 @@
 <script src="{{ asset('admindashboard/assets/js/misc.js')}}"></script>
 <!-- endinject -->
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/classic/ckeditor.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.1.4/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/dataTables.fixedHeader.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/4.0.1/js/fixedHeader.dataTables.js"></script>
+<script>
+  new DataTable('#example1', {
+    initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                let title = column.footer().textContent;
+ 
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.footer().replaceChildren(input);
+ 
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                    if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                    }
+                });
+            });
+    },
+    fixedHeader: {
+        footer: true
+    }
+});
+  new DataTable('#example2', {
+    initComplete: function () {
+        this.api()
+            .columns()
+            .every(function () {
+                let column = this;
+                let title = column.footer().textContent;
+ 
+                // Create input element
+                let input = document.createElement('input');
+                input.placeholder = title;
+                column.footer().replaceChildren(input);
+ 
+                // Event listener for user input
+                input.addEventListener('keyup', () => {
+                    if (column.search() !== this.value) {
+                        column.search(input.value).draw();
+                    }
+                });
+            });
+    },
+    fixedHeader: {
+        footer: true
+    }
+});
+</script>
 
 </body>
 

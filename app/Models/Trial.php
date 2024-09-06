@@ -6,14 +6,18 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Voucher extends Model
+class Trial extends Model
 {
     use HasFactory;
-
-    protected $primaryKey = 'id_voucher';
+    protected $primaryKey = 'id_trial';
     protected $fillable = [
-        'discount','code','exp_date','detail','category','kuota','timer_end','timer_start','title'];
-    
+        'nik','user_id'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+        
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timestamp;

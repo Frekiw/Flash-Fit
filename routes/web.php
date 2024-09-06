@@ -1,11 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CmsController;
 use App\Http\Controllers\TncController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SalesController;
+use App\Http\Controllers\TrialController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\MetodeController;
 use App\Http\Controllers\ArticleController;
@@ -25,6 +27,7 @@ use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserpresenceController;
+use App\Http\Controllers\Jadwal_trainingController;
 use App\Http\Controllers\TrainerpresenceController;
 use App\Http\Controllers\Session_transactionController;
 
@@ -58,6 +61,8 @@ Route::prefix('dashboard')
         Route::resource('vouchers', VoucherController::class);
         Route::resource('saless', SalesController::class);
         Route::resource('metodes', MetodeController::class);
+        Route::resource('cmss', CmsController::class);
+        Route::resource('jadwal_trainings', Jadwal_trainingController::class);
 
         Route::resource('presences', PresenceController::class);
         Route::resource('datatrainers', DatatrainerController::class);
@@ -79,6 +84,10 @@ Route::prefix('dashboard')
         Route::resource('notifications', NotificationController::class);
         Route::resource('settings', SettingController::class);
         Route::resource('accounts', UserController::class);
+        Route::resource('trials', TrialController::class);
+        Route::post('/hangus/{id}', [UserController::class, 'hangus'])->name('hangus');
+
+
     });
 
 Route::get('/qrcode/{id_location}',[LocationController::class,'location'])->name('locations.qrcode');

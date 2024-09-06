@@ -26,7 +26,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password','code_member','code_sales','code_refal','profile_photo_path'
+        'name', 'email', 'password','profile_photo_path','revoke_akun','roles','phone'
     ];
 
     /**
@@ -49,6 +49,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function member()
+    {
+        return $this->hasOne(Participant::class,'code','code_member');
+    }
 
     /**
      * The accessors to append to the model's array form.

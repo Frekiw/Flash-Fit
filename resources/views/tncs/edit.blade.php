@@ -23,12 +23,12 @@
                 </div>
                 <div class="card-body">
                     <label for="notes" class="fw-bold mt-3">Required</label>
-                    <div class="input-group input-group-outline">
-                      <textarea class="form-control w-100" name="required" id="notes" value="{{ old('required') ?? $item->required }}" placeholder="Masukkan Narasi">{{ $item->required }}</textarea>
+                    <div class="w-100">
+                      <textarea class="form-control" name="required" id="notes" value="{{ old('required') ?? $item->required }}" placeholder="Masukkan Narasi">{{ $item->required }}</textarea>
                     </div>
                     <label for="notes" class="fw-bold mt-3">Policy</label>
-                    <div class="input-group input-group-outline">
-                      <textarea class="form-control w-100" name="policy" id="notes2" value="{{ old('policy') ?? $item->policy }}" placeholder="Masukkan Narasi">{{ $item->policy }}</textarea>
+                    <div class="w-100">
+                      <textarea class="form-control" name="policy" id="notes2" value="{{ old('policy') ?? $item->policy }}" placeholder="Masukkan Narasi">{{ $item->policy }}</textarea>
                     </div>
                 </form>
                 @endforeach             

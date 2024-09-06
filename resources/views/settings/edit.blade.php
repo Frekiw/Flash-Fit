@@ -5,15 +5,15 @@
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('tncs.index') }}">Terms And Condition</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Edit Terms And Condition</li>
+        <li class="breadcrumb-item"><a href="{{ route('settings.index') }}">Setting</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Setting</li>
       </ol>
     </nav>
     <div class="container">
         <div class="row">
             <div class="col-md-12">
               <div class="card">
-                <div class="card-header d-flex justify-content-between">
+                <div class="card-header d-flex justify-content-between align-items-center">
                   <h4>Terms And Condition</h4>
                   @foreach ($setting as $item)
                   <form action="{{ route('settings.update', $item->id_setting) }}" method="post" enctype="multipart/form-data">
@@ -22,40 +22,22 @@
                     <button type="submit" class="btn btn-success my-3">Submit</button>
                 </div>
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                          <label for="notes" class="fw-bold mt-3">Banner</label>
-                          <div class="input-group input-group-outline">
-                              <textarea class="form-control" value="{{ old('banner') ?? $item->banner }}" name="banner" id="banner" placeholder="Masukkan Banner">{{ $item->banner }}</textarea>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <label for="notes" class="fw-bold mt-3">Banner 2</label>
-                          <div class="input-group input-group-outline">
-                              <textarea class="form-control w-100" value="{{ old('banner2') ?? $item->banner2 }}" name="banner2" id="banner2" placeholder="Masukkan Banner 2">{{ $item->banner2 }}</textarea>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                          <label for="notes" class="fw-bold mt-3">Promo PT</label>
-                          <div class="input-group input-group-outline">
-                              <textarea class="form-control w-100" value="{{ old('promo_pt') ?? $item->promo_pt }}" name="promo_pt" id="promo_pt" placeholder="Masukkan Promo PT">{{ $item->promo_pt }}</textarea>
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <label for="notes" class="fw-bold mt-3">Promo Membership</label>
-                          <div class="input-group input-group-outline">
-                              <textarea class="form-control w-100" value="{{ old('promo_membership') ?? $item->promo_membership }}" name="promo_membership" id="promo_membership" placeholder="Masukkan Promo Membership">{{ $item->promo_membership }}</textarea>
-                          </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                      <label for="notes" class="fw-bold mt-3">Tnc Daftar</label>
-                      <div class="input-group input-group-outline">
-                          <textarea class="form-control w-100" value="{{ old('tnc_daftar') ?? $item->tnc_daftar }}" name="tnc_daftar" id="notes" placeholder="Masukkan Tnc Daftar">{{ $item->tnc_daftar }}</textarea>
-                      </div>
-                    </div>
+                  <label for="notes" class="fw-bold mt-3">Tnc Daftar 1</label>
+                  <div class="w-100">
+                      <textarea class="form-control w-100" value="{{ old('tnc_daftar1') ?? $item->tnc_daftar1 }}" name="tnc_daftar1" id="notes" placeholder="Masukkan Tnc Daftar">{{ $item->tnc_daftar1 }}</textarea>
+                  </div>
+                  <label for="notes" class="fw-bold mt-3">Tnc Daftar 2</label>
+                  <div class="w-100">
+                      <textarea class="form-control w-100" value="{{ old('tnc_daftar2') ?? $item->tnc_daftar2 }}" name="tnc_daftar2" id="notes2" placeholder="Masukkan Tnc Daftar">{{ $item->tnc_daftar2 }}</textarea>
+                  </div>
+                  <label for="notes" class="fw-bold mt-3">Tnc Daftar 3</label>
+                  <div class="w-100">
+                      <textarea class="form-control w-100" value="{{ old('tnc_daftar3') ?? $item->tnc_daftar3 }}" name="tnc_daftar3" id="notes3" placeholder="Masukkan Tnc Daftar">{{ $item->tnc_daftar3 }}</textarea>
+                  </div>
+                  <label for="notes" class="fw-bold mt-3">Tnc Personal Trainer</label>
+                  <div class="w-100">
+                      <textarea class="form-control w-100" value="{{ old('tnc_pt') ?? $item->tnc_pt }}" name="tnc_pt" id="notes4" placeholder="Masukkan Tnc Daftar">{{ $item->tnc_pt }}</textarea>
+                  </div>
                 </form>
                 @endforeach             
                 </div>
@@ -102,6 +84,21 @@
   });
   ClassicEditor
   .create(document.querySelector('#notes2'))
+  .catch(error => {
+  console.error(error);
+  });
+  ClassicEditor
+  .create(document.querySelector('#notes3'))
+  .catch(error => {
+  console.error(error);
+  });
+  ClassicEditor
+  .create(document.querySelector('#notes4'))
+  .catch(error => {
+  console.error(error);
+  });
+  ClassicEditor
+  .create(document.querySelector('#notes5'))
   .catch(error => {
   console.error(error);
   });
