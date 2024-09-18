@@ -65,7 +65,17 @@
                     </div>
                     <section class="roles-member">
                         <div class="form-group mt-3">
-                            <label for="packaged_id">Packaged ID</label>
+                            <label for="location_id">Pilih Club</label>
+                            <select name="location_id" id="location_id" class="form-control select2" required>
+                                <option value="">Pilih Location</option>
+                                <option value="All Club">All Club</option>
+                                @foreach($location as $lct)
+                                    <option value="{{ $lct->id_location }}">
+                                        {{ $lct->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <label for="packaged_id" class="mt-3">Pilih Packaged</label>
                             <select name="packaged_id" id="packaged_id" class="form-control select2" required>
                                 <option value="">Pilih Packaged</option>
                                 @foreach($packaged as $pkg)

@@ -75,6 +75,50 @@ class UserController extends Controller
         return ResponseFormatter::success($token, 'Token Revoked');
     }
 
+    public function register (Request $request)
+    {
+        try {
+            $validator=Validator::make($request->all(),[
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string','email', 'max:255', 'unique:users'],
+                'password' => $this->passwordRules(),
+                'phone' => 'required',
+                'gender' => 'required',
+                'profile_photo_path' =>'required|image|max:2048'
+            ]);
+
+            if($validator->fails())
+        {
+            return response()->json($validator->errors());
+        }
+            $profile_photo_pathPath = $request->file('profile_photo_path')->store('assets/user', 'public');
+            User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'gender' => $request->gender,
+                'password' => Hash::make($request->password),
+                'profile_photo_path' => $profile_photo_pathPath
+            ]);
+
+                $user = User::where('email', $request->email)->first();
+
+                $tokenResult= $user->createToken('authToken')->plainTextToken;
+
+                return ResponseFormatter::success([
+                    'access_token' => $tokenResult,
+                    'token_type' => 'Bearer',
+                    'user' => $user
+                ], 'User Registered');
+
+        } catch (Exception $error) {
+            return ResponseFormatter::error([
+                'message'=> 'Something went wrong',
+                'error'=> $error
+            ],'Authentication Failed', 500);
+        }
+    }
+
     public function updateProfile(Request $request)
     {
         $user = Auth::user();

@@ -37,6 +37,14 @@
                     <div class="input-group input-group-outline w-100">
                         <input type="text" name="phone" class="form-control" id="phone" placeholder="Masukkan Nomor Telephone">
                     </div>
+                  <label for="notes" class=" mt-3">Gender</label>
+                    <div class="input-group input-group-outline w-100">
+                        <select class="form-control w-100" name="gender" id="gender">
+                            <option value="" disabled selected>Masukkan Gender</option>
+                            <option value="Pria">Pria</option>
+                            <option value="Wanita">Wanita</option>
+                        </select>
+                    </div>
                   <label for="notes" class=" mt-3">Roles</label>
                     <div class="input-group input-group-outline w-100">
                         <select class="form-control w-100" name="roles" id="roles">
@@ -207,6 +215,7 @@
                                     <th class="text-center">Nama</th>
                                     <th class="text-center">NIK</th>
                                     <th class="text-center">Status</th>
+                                    <th class="text-center">Lokasi</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
@@ -221,7 +230,7 @@
                                         {{ $trials->nik }}
                                     </td>
                                     <td class="d-flex justify-content-center align-items-center">
-                                        @if ($trials->status == null)
+                                        @if ($trials->status == "pending")
                                             <a type="button" data-bs-toggle="modal" data-bs-target="#confirmModal{{ $trials->id_trial }}">
                                                 <div class="btn btn-info rounded-circle">
                                                     <small><i class="fa-solid fa-check-circle"></i></small>
@@ -234,7 +243,10 @@
                                             </div>
                                         </a>
                                         @endif
-                                    </td>         
+                                    </td>     
+                                    <td class="text-center">
+                                        {{ optional($trials->location)->name }}
+                                    </td>                                        
                                     <td>
                                         <div class="d-flex justify-content-center align-items-center">
                                         <a type="button" data-bs-toggle="modal" data-bs-target="#EditModal2{{ $trials->id_trial }}" class="mdc-button mdc-button--outlined shaped-button outlined-button--edit mdc-ripple-upgraded mx-2"> Edit </a>
@@ -255,6 +267,7 @@
                                     <th class="text-center">Nama</th>
                                     <th class="text-center">NIK</th>
                                     <th class="text-center">Status</th>
+                                    <th class="text-center">Lokasi</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
                             </tfoot>
@@ -288,6 +301,14 @@
                     <label for="time" class=" mt-3">Nomor Telephone</label>
                     <div class="input-group input-group-outline w-100">
                         <input type="text" name="phone"  value="{{ old('phone') ?? $items->phone  }}"  class="form-control" id="phone" placeholder="Masukkan Nomor Telephone">
+                    </div>
+                    <label for="notes" class=" mt-3">Gender</label>
+                    <div class="input-group input-group-outline w-100">
+                        <select class="form-control w-100" name="gender" id="gender">
+                            <option value="" disabled {{ !$items->gender ? 'selected' : '' }}>Masukkan Gender</option>
+                            <option value="Pria" {{ $items->gender == 'Pria' ? 'selected' : '' }}>Pria</option>
+                            <option value="Wanita" {{ $items->gender == 'Wanita' ? 'selected' : '' }}>Wanita</option>
+                        </select>
                     </div>
                     <label for="notes" class=" mt-3">Roles</label>
                     <div class="input-group input-group-outline w-100">
@@ -346,6 +367,15 @@
                             @foreach($user2 as $users2)
                             <option value="{{ $users2->id }}" {{ $users2->id == $trials->user_id ? 'selected' : '' }}>
                                 {{ $users2->name }}
+                            </option>
+                        @endforeach
+                        </select>
+                    <label for="location id" class="fw-bold">Nama Lokasi</label>
+                        <select name="location_id" id="location_id" class="form-control select2" required>
+                            <option value="">Pilih Lokasi</option>
+                            @foreach($location as $locations)
+                            <option value="{{ $locations->id_location }}" {{ $locations->id_location == $trials->location_id ? 'selected' : '' }}>
+                                {{ $locations->name }}
                             </option>
                         @endforeach
                         </select>

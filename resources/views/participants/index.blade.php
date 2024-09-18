@@ -51,6 +51,7 @@
                                     <th class="text-center">Nama</th>
                                     <th class="text-center">Email</th>
                                     <th class="text-center">Lahir</th>
+                                    <th class="text-center">Lokasi</th>
                                     <th class="text-center">Phone</th>
                                     <th class="text-center">Actions</th>
                                 </tr>
@@ -71,6 +72,13 @@
                                         {{ $item->email }}
                                     </td>
                                     <td class="text-center">{{ $item->tgl_lahir }}</td>
+                                    <td class="text-center">
+                                      @if ($item->location_id == "All Club" )
+                                      {{ $item->location_id }}
+                                      @else
+                                      {{ $item->location->name }}
+                                      @endif
+                                    </td>
                                     <td class="text-center">{{ $item->no_telp }}</td>
                                     <td>
                                      <div class="d-flex justify-content-center align-items-center">
@@ -94,6 +102,7 @@
                                   <th class="text-center">Nama</th>
                                   <th class="text-center">Email</th>
                                   <th class="text-center">Lahir</th>
+                                  <th class="text-center">Lokasi</th>
                                   <th class="text-center">Phone</th>
                                   <th class="text-center">Actions</th>
                               </tr>

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Trial;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use App\Models\Location;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,11 +19,13 @@ class UserController extends Controller
     {
         $user = User::paginate(100000);
         $user2 = User::all();
-        $trial = Trial::with('user')->get();
+        $location = Location::all();
+        $trial = Trial::with('user','location')->get();
 
         return view('accounts.index', [
             'item' => $user,
             'user2' => $user2,
+            'location' => $location,
             'trial' => $trial
            ]);
     }

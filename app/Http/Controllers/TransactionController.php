@@ -14,7 +14,7 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        $transaction = Transaction::with('detail_transaction.user','detail_transaction.metode')->get();
+        $transaction = Transaction::with('metode','user')->get();
         $transactionsesi = Session_transaction::with('user','hargasesi')->get();
  
         return view('transactions.index', [

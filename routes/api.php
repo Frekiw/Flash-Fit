@@ -6,6 +6,7 @@ use App\Http\Controllers\API\TncController;
 use App\Http\Controllers\API\CutiController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\KelasController;
+use App\Http\Controllers\API\TrialController;
 use App\Http\Controllers\API\BannerController;
 use App\Http\Controllers\API\ArticleController;
 use App\Http\Controllers\API\SettingController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\API\VoucherController;
 use App\Http\Controllers\API\LocationController;
 use App\Http\Controllers\API\PackagedController;
 use App\Http\Controllers\API\JadwalkelasController;
+use App\Http\Controllers\API\ParticipantController;
 use App\Http\Controllers\API\TransactionController;
 use App\Http\Controllers\API\NotificationController;
 
@@ -34,6 +36,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('update/user', [UserController::class, 'updateProfile']);
     Route::post('user/photo', [UserController::class, 'updatePhoto']);
     Route::post('cuti/tambah', [CutiController::class, 'cuti']);
+    Route::post('trial/tambah', [TrialController::class, 'trial']);
     Route::get('packaged', [PackagedController::class, 'all']);
     Route::get('trainer', [TrainerController::class, 'all']);
     Route::get('voucher', [VoucherController::class, 'all']);
@@ -44,9 +47,14 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('notification', [NotificationController::class, 'all']);
     Route::get('location', [LocationController::class, 'all']);
     Route::get('transaction', [TransactionController::class, 'all']);
+    Route::post('checkout', [TransactionController::class, 'checkout']);
 });
 
 Route::post('login', [UserController::class, 'login']);
+Route::post('participant', [ParticipantController::class, 'all']);
+Route::post('participant/tambah', [ParticipantController::class, 'participant']);
+Route::post('register', [UserController::class, 'register']);
 Route::get('cuti', [CutiController::class, 'all']);
 Route::get('setting', [SettingController::class, 'all']);
+Route::get('tnc/tncdaftar', [TncController::class, 'tncdaftar']);
 Route::get('tnc', [TncController::class, 'all']);

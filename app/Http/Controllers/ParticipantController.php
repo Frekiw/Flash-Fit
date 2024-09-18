@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Sales;
+use App\Models\Location;
 use App\Models\Packaged;
 use App\Models\Presence;
 use App\Models\Participant;
@@ -42,8 +43,9 @@ class ParticipantController extends Controller
         $sales = Sales::all();
         $packaged = Packaged::all();
         $participant = Participant::all();
+        $location = Location::all();
     
-        return view('participants.create', compact('sales','participant','packaged'));
+        return view('participants.create', compact('sales','participant','packaged','location'));
     }
 
     /**
@@ -97,10 +99,12 @@ class ParticipantController extends Controller
     {
         $sales = Sales::all();
         $packaged = Packaged::all();
+        $location = Location::all();
 
         return view('participants.edit', [
             'item'=> $participant,
             'packaged' => $packaged,
+            'location' => $location,
             'sales' => $sales
         ]);
     }

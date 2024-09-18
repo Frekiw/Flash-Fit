@@ -13,6 +13,21 @@
   .mdc-button.outlined-button--edit:not(:disabled) {
     color: #00ee47 !important;
   }
+.price-wrapper{
+  position: relative; 
+  display: inline-block;
+}
+
+.price-slash{
+  position: relative;
+  width: 100%;
+  height: 0;
+  border-top: 1px solid red;
+  top: 10px;
+}
+
+/* .price{ font-size: 10px;} */
+
 </style>
 <div class="page-wrapper mdc-toolbar-fixed-adjust">
   <main class="content-wrapper">
@@ -39,6 +54,7 @@
                         <table id="example1" class="table display">
                             <thead>
                                 <tr>
+                                    <th class="text-center">Nomor</th>
                                     <th class="text-center">Nama</th>
                                     <th class="text-center">Tanggal</th>
                                     <th class="text-center">Category</th>
@@ -51,7 +67,10 @@
                             <tbody>
                               @forelse ($transaction as $transactions)
                                 <tr>
-                                    <td class="text-center">{{ $transactions->detail_transaction->user->name ?? 'No user found' }}</td>
+                                    <td class="text-center">
+                                      {{ $transactions->id_transaction }}
+                                    </td>
+                                    <td class="text-center">{{ $transactions->user->name ?? 'No user found' }}</td>
                                     <td class="text-center">
                                       {{ $transactions->date }}
                                     </td>
@@ -60,12 +79,16 @@
                                     </td>
                                     <td class="text-center">
                                         {{ $transactions->detail_transaction->detail ?? 'No Detail Found' }},
-                                        {!! $transactions->detail_transaction->voucher ? $transactions->detail_transaction->voucher : '<i class="text-danger">TANPA VOUCHER</i>' !!}
+                                        {!! $transactions->voucher ? $transactions->voucher : '<i class="text-danger">TANPA VOUCHER</i>' !!}
                                     </td>
                                     
-                                    <td class="text-center">
-                                        {{ 'Rp ' . number_format($transactions->total, 0, ',', '.') }}
-                                      </td>
+                                        <td class="text-center">
+                                          <div class="price-wrapper">
+                                            <div class="price-slash"></div>
+                                            <div class="price"><small>{{ 'Rp ' . number_format($transactions->harga_asli, 0, ',', '.') }}</small></div>
+                                          </div>
+                                          <h5 class="fw-bold mt-1">{{ 'Rp ' . number_format($transactions->total, 0, ',', '.') }}</>
+                                        </td>                                  
                                       
                                       <td class="text-center">
                                         @if ($transactions->status == 'declined')
@@ -87,6 +110,7 @@
                             </tbody>
                             <tfoot>
                               <tr>
+                                  <th class="text-center">Nomor</th>
                                   <th class="text-center">Nama</th>
                                   <th class="text-center">Tanggal</th>
                                   <th class="text-center">Category</th>
@@ -186,7 +210,7 @@
                 @method('PUT')
                 <label for="nama" class="fw-bold mt-3">Nama</label>
                 <div class="input-group input-group-outline w-100">
-                    <input type="text" value="{{ $transactions->detail_transaction->user->name ?? 'No user found' }}" class="form-control" id="name" placeholder="Masukkan Nama" readonly>
+                    <input type="text" value="{{ $transactions->user->name ?? 'No user found' }}" class="form-control" id="name" placeholder="Masukkan Nama" readonly>
                 </div>  
                 <label for="nama" class="fw-bold mt-3">Category</label>
                 <div class="input-group input-group-outline w-100">
@@ -196,17 +220,29 @@
                 <div class="input-group input-group-outline w-100">
                     <input type="text" value="{{ $transactions->detail_transaction->detail ?? 'No Detail Found' }} {!! $transactions->detail_transaction->voucher ? $transactions->detail_transaction->voucher : 'TANPA VOUCHER' !!}" class="form-control" id="name" placeholder="Masukkan Nama" readonly>
                 </div>  
+                <label for="nama" class="fw-bold mt-3">Harga Asli</label>
+                <div class="input-group input-group-outline w-100">
+                    <input type="text" value="{{ old('harga_asli') ?? $transactions->harga_asli }}" name="harga_asli" class="form-control" id="harga_asli" placeholder="Masukkan Harga Asli" @if ($transactions->status != "pending") readonly @endif>
+                </div>  
+                <label for="nama" class="fw-bold mt-3">Potongan</label>
+                <div class="input-group input-group-outline w-100">
+                    <input type="text" value="{{ old('potongan') ?? $transactions->potongan }}" name="potongan" class="form-control" id="potongan" placeholder="Masukkan Potongan Harga" @if ($transactions->status != "pending") readonly @endif>
+                </div>  
+                <label for="nama" class="fw-bold mt-3">Voucher</label>
+                <div class="input-group input-group-outline w-100">
+                    <input type="text" value="{{ old('voucher') ?? $transactions->voucher }}" name="voucher" class="form-control" id="voucher" placeholder="Masukkan Voucher Harga" readonly>
+                </div>  
                 <label for="nama" class="fw-bold mt-3">Total</label>
                 <div class="input-group input-group-outline w-100">
-                    <input type="text" value="{{ old('total') ?? $transactions->total }}" name="total" class="form-control" id="no_rek" placeholder="Masukkan No Rekening" readonly>
+                    <input type="text" value="{{ old('total') ?? $transactions->total }}" name="total" class="form-control" id="total" placeholder="Masukkan Total Harga" @if ($transactions->status != "pending") readonly @endif>
                 </div>  
                 <label for="nama" class="fw-bold mt-3">Metode</label>
                 <div class="input-group input-group-outline w-100">
-                    <input type="text" value="{{ $transactions->detail_transaction->metode->name ?? 'No Metode found' }}" class="form-control" id="no_rek" placeholder="Masukkan No Rekening" readonly>
+                    <input type="text" value="{{ $transactions->metode->name ?? 'No Metode found' }}" class="form-control" id="no_rek" placeholder="Masukkan No Rekening" readonly>
                 </div>  
                 <label for="nama" class="fw-bold mt-3">Foto</label>
                 <div class="py-2" style="width: 300px; height: 200px">
-                    <img class="w-100 h-100 object-fit-cover" src="{{  asset('storage/'.$transactions->detail_transaction->picture) }}" alt="">
+                    <img class="w-100 h-100 object-fit-cover" src="{{  asset('storage/'.$transactions->picture) }}" alt="">
                 </div> 
                 <label for="nama" class="fw-bold mt-3">Status</label>
                 <div class="input-group input-group-outline w-100">
@@ -339,7 +375,6 @@
     }
 });
 </script>
-
 </body>
 
 <!-- Mirrored from demo.bootstrapdash.com/caroline/template/demo_1/pages/tables/data-tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Jul 2024 03:20:08 GMT -->

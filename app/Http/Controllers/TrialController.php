@@ -13,7 +13,7 @@ class TrialController extends Controller
      */
     public function index()
     {
-        $trial = Trial::with('user')->get();
+        $trial = Trial::with('user','location')->get();
     }
 
     /**

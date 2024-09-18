@@ -17,6 +17,10 @@ class Location extends Model
     {
         return $this->hasMany(Jadwalkelas::class, 'location_id', 'id_location');
     }
+    public function trial()
+    {
+        return $this->hasMany(Jadwalkelas::class, 'location_id', 'id_location');
+    }
     public function getCreatedAtAttribute($value)
     {
         return Carbon::parse($value)->timestamp;

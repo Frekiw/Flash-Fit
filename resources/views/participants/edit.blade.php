@@ -79,6 +79,17 @@
                                 </option>
                                 @endforeach
                             </select>
+                            <label class="mt-3" for="location_id">Pilih Club</label>
+                            <select id="location_id" name="location_id" class="form-control select2" required>
+                                <option value="">Pilih Club</option>
+                                <option value="All Club" {{ $item->location_id == 'All Club' ? 'selected' : '' }}>All Club</option>
+                                @foreach($location as $lct)
+                                <option value="{{ $lct->id_location }}" 
+                                        {{ $lct->id_location == $item->location_id ? 'selected' : '' }}>
+                                            {{ $lct->name }}
+                                </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="row">
                             <div class="col-md-6">

@@ -1,0 +1,344 @@
+
+<?php $__env->startSection('admincontent'); ?>
+<style>
+    .mdc-button.outlined-button--delete:not(:disabled) {
+      border-color: #ee0000 !important;
+    }
+    .mdc-button.outlined-button--delete:not(:disabled) {
+      color: #ee0000 !important;
+    }
+    .mdc-button.outlined-button--edit:not(:disabled) {
+      border-color: #00ee47 !important;
+    }
+    .mdc-button.outlined-button--edit:not(:disabled) {
+      color: #00ee47 !important;
+    }
+  </style>
+<div class="page-wrapper mdc-toolbar-fixed-adjust">
+    <nav aria-label="breadcrumb" class="ms-5">
+        <ol class="breadcrumb breadcrumb-style1">
+          <li class="breadcrumb-item">
+            <a href="<?php echo e(route('dashboard')); ?>">
+                <i class="fa fa-home text-success"></i>
+            </a>
+          </li>
+          <li class="breadcrumb-item">
+            <a class="" href="<?php echo e(route('kelass.index')); ?>">Kelas</a>
+          </li>
+          <li class="breadcrumb-item active text-secondary">
+            <i>Lokasi</i>
+          </li>
+        </ol>
+      </nav>
+  <main class="content-wrapper">
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Tambah Data Jadwal Kelas</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="<?php echo e(route('jadwalkelass.store')); ?>" method="post" enctype="multipart/form-data">
+                    <?php echo csrf_field(); ?>
+                    <div class="row">
+                        <?php
+                        // Get today's date
+                        $today = new DateTime();
+                        $today->setTime(0, 0, 0);
+
+                        // Get the start (Monday) of the current week
+                        $startOfWeek = clone $today;
+                        $startOfWeek->modify('this week');
+
+                        // Get the end (Sunday) of the current week
+                        $endOfWeek = clone $startOfWeek;
+                        $endOfWeek->modify('+6 days');
+
+                        // Format the dates to 'Y-m-d'
+                        $minDate = $startOfWeek->format('Y-m-d');
+                        $maxDate = $endOfWeek->format('Y-m-d');
+                        ?>
+                        <div class="col-md-6">
+                            <label for="nama" class="fw-bold mt-3">Tanggal</label>
+                            <div class="input-group input-group-outline w-100">
+                                <input type="date" name="date" class="form-control" id="date" min="<?php echo $minDate; ?>" max="<?php echo $maxDate; ?>" required>
+                            </div>  
+                        </div>
+                        <div class="col-md-6">
+                            <label for="notes" class="fw-bold mt-3">Jam</label>
+                            <div class="input-group input-group-outline">
+                                <input type="time" class="form-control w-100" name="time" id="time" placeholder="Masukkan Jam">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="class_id">Kelas</label>
+                        <select name="class_id" id="class_id" class="form-control" required>
+                            <option value="">Pilih Kelas</option>
+                            <?php $__currentLoopData = $kelas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kls): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($kls->id_kelas); ?>">
+                                <?php echo e($kls->name); ?>
+
+                            </option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group mt-3">
+                                <label for="participant_id">Trainer</label>
+                                <select name="participant_id" id="participant_id" class="form-control select2" required>
+                                    <option value="">Pilih Trainer</option>
+                                    <?php $__currentLoopData = $participant; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ptpn): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($ptpn->id_participant); ?>">
+                                        <?php echo e($ptpn->name); ?>
+
+                                    </option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group mt-3">
+                                <label for="location_id">Lokasi </label>
+                                <select name="location_id" id="location_id" class="form-control select2" required>
+                                    <option value="">Pilih Location</option>
+                                    <?php $__currentLoopData = $daftarloc; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $daftarlocs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($daftarlocs->id_location); ?>">
+                                        <?php echo e($daftarlocs->name); ?>
+
+                                    </option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-warning my-3">Submit</button>
+                    </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="mdc-layout-grid">
+        <div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+                <div class="mdc-card">
+                    <div class="fw-bold">
+                        <h5>Lokasi : <?php echo e($location->name); ?></h5>
+                    </div>
+                    <div class="">
+                        <h2>Jadwal Kelas</h2>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Hari</th>
+                                    <th class="text-center">Tanggal</th>
+                                    <th class="text-center">Jenis Kelas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // Array to store the dates of the week
+                                $weekDates = [];
+                                
+                                // Get today's date
+                                $today = new DateTime();
+                                
+                                // Determine the start of the week (Monday)
+                                $dayOfWeek = $today->format('N');
+                                $startOfWeek = clone $today;
+                                $startOfWeek->modify('-' . ($dayOfWeek - 1) . ' days');
+                                
+                                // Loop through the days of the current week (Monday to Sunday)
+                                for ($i = 0; $i < 7; $i++) {
+                                    $currentDay = clone $startOfWeek;
+                                    $currentDay->modify("+$i day");
+                                    $weekDates[] = $currentDay;
+                                }
+                                
+                                // Days of the week in Indonesian
+                                $daysOfWeek = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
+                                
+                                // Loop through the days and dates
+                                for ($i = 0; $i < 7; $i++) {
+                                    echo "<tr>";
+                                    echo "<td>" . $daysOfWeek[$i] . "</td>";
+                                    
+                                    // Format the date as 19-Aug-2024
+                                    $formattedDate = $weekDates[$i]->format('d-M-Y');
+                                    echo "<td>" . $formattedDate . "</td>";
+                                
+                                    // Find the kelas for this date
+                                    $kelasForDate = $jadwalkelas->filter(function ($item) use ($weekDates, $i) {
+                                        return $item->date == $weekDates[$i]->format('Y-m-d');
+                                    });
+                                
+                                    // Prepare buttons for classes
+                                    $buttons = $kelasForDate->map(function ($kelas) {
+                                        $jenisKelas = $kelas->jeniskelass->name;
+                                        $idKelas = $kelas->id_jadwalkelas;
+                                        return "<div class='btn btn-outline-success22 rounded-pill mx-1 ms-0 px-3 py-1'>" 
+                                        . "<button type='button' data-bs-toggle='modal' style='background-color:#A6FF00; color:#1E1F24;' data-bs-target='#EditModal$idKelas' class='border-0 rounded-circle text-dark'><i class='fas fa-edit'></i></button> "
+                                        . "<form action='" . route('jadwalkelass.destroy', $idKelas) . "' onsubmit='return confirm(\"Apakah Anda Ingin Menghapus Data Ini?\")' method='POST' style='display:inline;'>"
+                                        . method_field('DELETE')
+                                        . csrf_field()
+                                        . "<button type='submit' style='background-color:#A6FF00; color:#1E1F24;' class='border-0 rounded-circle text-dark'><i class='fas fa-trash p-0 m-0' style='font-size:0.8rem;'></i></button>"
+                                        . "</form> "
+                                        . htmlspecialchars($jenisKelas) 
+                                        . "</div>";
+                                    })->implode(' ');
+                                
+                                    // Display class buttons and + Kelas link
+                                    echo "<td>" . $buttons . 
+                                         "<a href='#' type='button' data-bs-toggle='modal' data-bs-target='#exampleModal' class='btn btn-outline-primary rounded-pill'>+ Kelas</a>" . 
+                                         "</td>";
+                                    echo "</tr>";
+                                }
+                                ?>
+                            </tbody>
+                            
+                                                         
+                            
+                            
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</main>
+    <?php $__currentLoopData = $jadwalkelas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $jadwalkelass): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <div class="modal fade" id="EditModal<?php echo e($jadwalkelass->id_jadwalkelas); ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Data jadwalkelas</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form action="<?php echo e(route('jadwalkelass.update', $jadwalkelass->id_jadwalkelas)); ?>" method="post" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
+                <?php echo method_field('PUT'); ?>
+                <div class="row">
+                    <?php
+                    // Get today's date
+                    $today = new DateTime();
+                    $today->setTime(0, 0, 0);
+
+                    // Get the start (Monday) of the current week
+                    $startOfWeek = clone $today;
+                    $startOfWeek->modify('this week');
+
+                    // Get the end (Sunday) of the current week
+                    $endOfWeek = clone $startOfWeek;
+                    $endOfWeek->modify('+6 days');
+
+                    // Format the dates to 'Y-m-d'
+                    $minDate = $startOfWeek->format('Y-m-d');
+                    $maxDate = $endOfWeek->format('Y-m-d');
+                    ?>
+                    <div class="col-md-6">
+                        <label for="nama" class="fw-bold mt-3">Tanggal</label>
+                        <div class="input-group input-group-outline w-100">
+                            <input type="date" name="date" value="<?php echo e(old('date') ?? $jadwalkelass->date); ?>" class="form-control" id="date" min="<?php echo $minDate; ?>" max="<?php echo $maxDate; ?>" required>
+                        </div>  
+                    </div>
+                    <div class="col-md-6">
+                        <label for="notes" class="fw-bold mt-3">Jam</label>
+                        <div class="input-group input-group-outline">
+                            <input type="time" class="form-control w-100" value="<?php echo e(old('time') ?? $jadwalkelass->time); ?>" name="time" id="time" placeholder="Masukkan Jam">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group mt-3">
+                    <label for="class_id">Kelas</label>
+                    <select name="class_id" id="class_id" class="form-control" required>
+                        <option value="">Pilih Kelas</option>
+                        <?php $__currentLoopData = $kelas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $kls): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($kls->id_kelas); ?>" <?php echo e($kls->id_kelas == $jadwalkelass->class_id ? 'selected' : ''); ?>>
+                            <?php echo e($kls->name); ?>
+
+                        </option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group mt-3">
+                            <label for="participant_id">Trainer</label>
+                            <select name="participant_id" id="participant_id" class="form-control select2" required>
+                                <option value="">Pilih Trainer</option>
+                                <?php $__currentLoopData = $participant; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ptpn): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($ptpn->id_participant); ?>" <?php echo e($ptpn->id_participant == $jadwalkelass->participant_id ? 'selected' : ''); ?> >
+                                    <?php echo e($ptpn->name); ?>
+
+                                </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group mt-3">
+                            <label for="location_id">Lokasi </label>
+                            <select name="location_id" id="location_id" class="form-control select2" required>
+                                <option value="">Pilih Location</option>
+                                <?php $__currentLoopData = $daftarloc; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $daftarlocs): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($daftarlocs->id_location); ?>" <?php echo e($daftarlocs->id_location == $jadwalkelass->location_id ? 'selected' : ''); ?>>
+                                    <?php echo e($daftarlocs->name); ?>
+
+                                </option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-warning my-3">Submit</button>
+                </form>
+                
+                </div>
+            </div>
+        </div>
+    </div>
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+  <!-- partial:admindashboard/admindashboard/partials/_footer.html -->
+  <footer>
+    
+  </footer>
+
+  <!-- partial -->
+</div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- plugins:js -->
+<script src="<?php echo e(asset('admindashboard/assets/vendors/js/vendor.bundle.base.js')); ?>"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<script src="<?php echo e(asset('admindashboard/assets/vendors/datatables/js/jquery.dataTables.min.js')); ?>"></script>
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="<?php echo e(asset('admindashboard/assets/js/material.js')); ?>"></script>
+<script src="<?php echo e(asset('admindashboard/assets/js/misc.js')); ?>"></script>
+
+
+
+
+</body>
+
+<!-- Mirrored from demo.bootstrapdash.com/caroline/template/demo_1/pages/tables/data-tables.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 23 Jul 2024 03:20:08 GMT -->
+</html>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin_master', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\laragon\www\flashfit\resources\views/jadwalkelass/location.blade.php ENDPATH**/ ?>
