@@ -76,24 +76,23 @@ DROP TABLE IF EXISTS `detail_transactions`;
 CREATE TABLE `detail_transactions` (
   `id_detailtransaction` bigint unsigned NOT NULL AUTO_INCREMENT,
   `transaction_id` bigint unsigned DEFAULT NULL,
-  `user_id` int unsigned DEFAULT NULL,
   `detail` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `date` date DEFAULT NULL,
   `total` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `voucher` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `metode_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `picture` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_detailtransaction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `detail_transactions` (`id_detailtransaction`, `transaction_id`, `user_id`, `detail`, `date`, `total`, `voucher`, `metode_id`, `picture`, `created_at`, `updated_at`) VALUES
-(1,	1,	1,	'Membership 3 bulan kategori Silver ',	'2024-08-06',	'256000',	'',	'2',	'assets/transaction/foto1.jpg',	'2024-08-06 07:21:07',	'2024-08-06 07:21:07'),
-(2,	2,	1,	'Membership 3 bulan kategori Gold',	'2024-08-06',	'356000',	'VOUCHER 10.000',	'2',	'assets/transaction/foto2.jpg',	'2024-08-06 08:12:07',	'2024-08-06 08:12:07'),
-(3,	3,	1,	'Membership 3 bulan kategori Bronze',	'2024-08-06',	'456000',	'',	'2',	'assets/transaction/foto3.jpg',	'2024-08-06 09:00:27',	'2024-08-06 09:00:27'),
-(4,	4,	1,	'Membership 3 bulan kategori Gold',	'2024-08-13',	'200000	',	NULL,	'2',	'assets/transaction/foto4.jpg',	'2024-08-13 08:58:13',	'2024-08-13 08:58:13'),
-(5,	5,	1,	'Membership 3 bulan kategori Gold',	'2024-08-13',	'500000',	NULL,	'2',	'assets/transaction/foto5.jpg',	'2024-08-13 08:58:57',	'2024-08-13 08:58:57');
+INSERT INTO `detail_transactions` (`id_detailtransaction`, `transaction_id`, `detail`, `date`, `total`, `created_at`, `updated_at`) VALUES
+(1,	1,	'Membership 3 bulan kategori Silver ',	'2024-08-06',	'246000',	'2024-08-06 07:21:07',	'2024-08-06 07:21:07'),
+(2,	2,	'Membership 3 bulan kategori Gold',	'2024-08-06',	'336000',	'2024-08-06 08:12:07',	'2024-08-06 08:12:07'),
+(3,	3,	'Membership 3 bulan kategori Bronze',	'2024-08-06',	'436000',	'2024-08-06 09:00:27',	'2024-08-06 09:00:27'),
+(4,	4,	'Membership 3 bulan kategori Gold',	'2024-08-13',	'190000',	'2024-08-13 08:58:13',	'2024-08-13 08:58:13'),
+(5,	5,	'Membership 3 bulan kategori Gold',	'2024-08-13',	'450000',	'2024-08-13 08:58:57',	'2024-08-13 08:58:57'),
+(7,	9,	'Membership 3 bulan kategori Silver ',	'2024-08-06',	'400000',	'2024-09-17 23:07:11',	'2024-09-17 23:07:11'),
+(8,	10,	'Membership 3 bulan kategori Silver ',	'2024-08-06',	'390000',	'2024-09-17 23:08:17',	'2024-09-17 23:08:17'),
+(9,	11,	'Sesi Personal Training ',	'2024-08-06',	'390000',	'2024-09-17 23:09:48',	'2024-09-17 23:09:48');
 
 DROP TABLE IF EXISTS `faildebits`;
 CREATE TABLE `faildebits` (
@@ -309,6 +308,7 @@ CREATE TABLE `participants` (
   `email` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
   `tgl_lahir` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `no_telp` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `location_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `packaged_id` int DEFAULT NULL,
   `category_m` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `name_m` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -322,13 +322,17 @@ CREATE TABLE `participants` (
   `failed_debit` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'false',
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id_participant`)
+  PRIMARY KEY (`id_participant`),
+  KEY `location_id` (`location_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `participants` (`id_participant`, `tanggal`, `code`, `code_sales`, `code_referal`, `name`, `email`, `tgl_lahir`, `no_telp`, `packaged_id`, `category_m`, `name_m`, `harga_m`, `roles`, `foto_trainer`, `total_client`, `rating`, `instagram`, `point`, `failed_debit`, `created_at`, `updated_at`) VALUES
-(20,	'2024-09-06',	'MM7747',	'SL0013',	'',	'Mas Zultan',	'zultan@gmail.com',	'2001-01-20',	'9023 2312 3212',	11,	'Bronze',	'6 Months',	'Rp1.950.000',	'member',	'',	'',	'',	'',	'0',	'false',	'2024-09-06 02:35:04',	'2024-09-05 19:35:04'),
-(21,	'2024-09-06',	'MM1860',	'SL0013',	'MM7747',	'Mas Rangga',	'rungga@gmail.com',	'2001-10-10',	'1233 4212 1232',	7,	'Gold',	'12 Months',	'Rp.3.300.000',	'member',	'',	'',	'',	'',	'0',	'false',	'2024-09-05 19:33:13',	'2024-09-05 19:33:13'),
-(22,	'2024-09-06',	'TR6494',	'SL0013',	'',	'Ronaldo0911',	'ronaldo0911@gmail.com',	'1995-10-10',	'2000 1000 1000',	NULL,	'',	'',	'',	'trainer',	'assets/trainer/LKrDVaHhGeo7ouyv5uw1tCCGODMJ3xT0xlnx1wpg.jpg',	'10',	'5.0',	'instagram.com/haha',	'0',	'false',	'2024-09-06 02:38:18',	'2024-09-05 19:38:18');
+INSERT INTO `participants` (`id_participant`, `tanggal`, `code`, `code_sales`, `code_referal`, `name`, `email`, `tgl_lahir`, `no_telp`, `location_id`, `packaged_id`, `category_m`, `name_m`, `harga_m`, `roles`, `foto_trainer`, `total_client`, `rating`, `instagram`, `point`, `failed_debit`, `created_at`, `updated_at`) VALUES
+(20,	'2024-09-06',	'MM7747',	'SL0013',	NULL,	'Mas Zultan',	'zultan@gmail.com',	'2001-01-20',	'9023 2312 3212',	'2',	11,	'Bronze',	'6 Months',	'Rp1.950.000',	'member',	'',	NULL,	NULL,	NULL,	'0',	'false',	'2024-09-11 06:54:24',	'2024-09-10 23:54:24'),
+(21,	'2024-09-06',	'MM1860',	'SL0013',	'MM7747',	'Mas Rangga',	'rungga@gmail.com',	'2001-10-10',	'1233 4212 1232',	'3',	7,	'Gold',	'12 Months',	'Rp.3.300.000',	'member',	'',	'',	'',	'',	'0',	'false',	'2024-09-05 19:33:13',	'2024-09-05 19:33:13'),
+(22,	'2024-09-06',	'TR6494',	'SL0013',	'',	'Ronaldo0911',	'ronaldo0911@gmail.com',	'1995-10-10',	'2000 1000 1000',	'5',	NULL,	'',	'',	'',	'trainer',	'assets/trainer/LKrDVaHhGeo7ouyv5uw1tCCGODMJ3xT0xlnx1wpg.jpg',	'10',	'5.0',	'instagram.com/haha',	'0',	'false',	'2024-09-06 02:38:18',	'2024-09-05 19:38:18'),
+(23,	'2024-09-11',	'MM5890',	'SL0013',	NULL,	'Mas Faza',	'Fazana@gmail.com',	'2000-06-19',	'3232 1234 5321',	'6',	2,	'Gold',	'24 Month',	'Rp5.976.000',	'member',	NULL,	NULL,	NULL,	NULL,	'0',	'false',	'2024-09-11 07:08:51',	'2024-09-11 00:08:51'),
+(24,	'2024-09-06',	'MM4411',	'SL0013',	NULL,	'Mas Salim',	'alimsalim@gmail.com',	'2001-01-20',	'9821 1234 2123',	'2',	11,	'Bronze',	'6 Months',	'Rp1.950.000',	'member',	NULL,	NULL,	NULL,	NULL,	'0',	'false',	'2024-09-11 00:33:25',	'2024-09-11 00:33:25'),
+(27,	'2024-09-06',	'MM7481',	'SL0013',	'MM4411',	'Mas Salim Part 3',	'alimsalim3@gmail.com',	'2001-10-20',	'9821 1234 2123',	'2',	11,	'Bronze',	'6 Months',	'Rp1.950.000',	'member',	NULL,	NULL,	NULL,	NULL,	'0',	'false',	'2024-09-11 00:37:01',	'2024-09-11 00:37:01');
 
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
@@ -359,13 +363,14 @@ CREATE TABLE `personal_access_tokens` (
 INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
 (1,	'App\\Models\\User',	1,	'authToken',	'5a3a10098a7a1eb2a46e2840bd86adc9ccf904993e8cdc93835c77e638d133ab',	'[\"*\"]',	'2024-08-18 20:58:19',	NULL,	'2024-08-13 00:16:48',	'2024-08-18 20:58:19'),
 (2,	'App\\Models\\User',	1,	'authToken',	'5e27ca7ec2cc97159ae75fceb8bd7679ad503c4f2f3fbbc7d31ce1f340897ff0',	'[\"*\"]',	'2024-08-20 21:11:51',	NULL,	'2024-08-13 00:41:58',	'2024-08-20 21:11:51'),
-(3,	'App\\Models\\User',	1,	'authToken',	'256230989a8f4e6b966fb88b0b725b8b5a3f19deb427bc833d9a4ecd9066bd52',	'[\"*\"]',	'2024-08-14 21:46:18',	NULL,	'2024-08-13 01:34:40',	'2024-08-14 21:46:18'),
+(3,	'App\\Models\\User',	1,	'authToken',	'256230989a8f4e6b966fb88b0b725b8b5a3f19deb427bc833d9a4ecd9066bd52',	'[\"*\"]',	'2024-09-11 20:15:10',	NULL,	'2024-08-13 01:34:40',	'2024-09-11 20:15:10'),
 (4,	'App\\Models\\User',	1,	'authToken',	'9979da26b10e9f4b0becd9e750c64947dabe8aa75be4bc2c36bee458a37edabc',	'[\"*\"]',	NULL,	NULL,	'2024-08-18 21:00:25',	'2024-08-18 21:00:25'),
 (5,	'App\\Models\\User',	1,	'authToken',	'b6cf1d6e70843e16cb6d04b70c70c22a36b34e986adbed217724130f4edaa080',	'[\"*\"]',	NULL,	NULL,	'2024-08-18 21:07:05',	'2024-08-18 21:07:05'),
 (6,	'App\\Models\\User',	1,	'authToken',	'65d4ae45354082fd6e9749c3496ccf00210e239263891f16172c3c46c8a08f92',	'[\"*\"]',	NULL,	NULL,	'2024-08-18 21:09:02',	'2024-08-18 21:09:02'),
 (7,	'App\\Models\\User',	1,	'authToken',	'0e1dce5a0fd82611e81ce19fdaad64deed6981040cd0a36ba2d770ca0e29e518',	'[\"*\"]',	NULL,	NULL,	'2024-08-18 21:11:22',	'2024-08-18 21:11:22'),
 (8,	'App\\Models\\User',	1,	'authToken',	'955f9c5c2ed9898c5a68378c7d6119ffdc02438bb146d615dcabe8b605c44111',	'[\"*\"]',	'2024-08-18 21:19:17',	NULL,	'2024-08-18 21:12:39',	'2024-08-18 21:19:17'),
-(9,	'App\\Models\\User',	1,	'authToken',	'c34fce89af434ec670420035baacc1145f71f2cd8071ae4df21f36fd9935b2db',	'[\"*\"]',	'2024-08-20 21:10:37',	NULL,	'2024-08-20 21:09:22',	'2024-08-20 21:10:37');
+(9,	'App\\Models\\User',	1,	'authToken',	'c34fce89af434ec670420035baacc1145f71f2cd8071ae4df21f36fd9935b2db',	'[\"*\"]',	'2024-09-10 21:46:55',	NULL,	'2024-08-20 21:09:22',	'2024-09-10 21:46:55'),
+(10,	'App\\Models\\User',	1,	'authToken',	'168f85fbd6150da28cda37c5a21af244181915ba5e2aa131f9a72475fc4fde51',	'[\"*\"]',	'2024-09-17 23:09:47',	NULL,	'2024-09-10 21:25:16',	'2024-09-17 23:09:47');
 
 DROP TABLE IF EXISTS `presences`;
 CREATE TABLE `presences` (
@@ -425,7 +430,9 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
-('z8KYgl2A5YxqKZGxassxCYxosGYtiyf7DWYvCAGW',	1,	'127.0.0.1',	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',	'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiMFdkQVhIVnZBczlWMjBVeHBCTjZqamlRSTR5c3JQOWEzQkFIQTFGcCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9mbGFzaGZpdC50ZXN0L2Rhc2hib2FyZCI7fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=',	1725592756);
+('btHIcMnOcGyDg84oS6gjrS59LOeAyKEAlsLxnEjJ',	1,	'127.0.0.1',	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',	'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiNXBwTVlVTU1pOXVxUGtrV1F3RndHSDBRZGkyU0Rmd2tUMmJVUGFndyI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzA6Imh0dHA6Ly9mbGFzaGZpdC50ZXN0L2Rhc2hib2FyZCI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=',	1726640668),
+('R7UnXwUJ5MQWyEzugVQV4TFBJYnKLeN9SubWURop',	1,	'127.0.0.1',	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36',	'YTo1OntzOjY6Il90b2tlbiI7czo0MDoiQVg0OXZBOXp5bGR2NWdrUjVuRGxsN3IwNjF1UnBqRjVIeDR0MUNLUiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mzk6Imh0dHA6Ly9mbGFzaGZpdC50ZXN0L2Rhc2hib2FyZC9hY2NvdW50cyI7fXM6NjoiX2ZsYXNoIjthOjI6e3M6Mzoib2xkIjthOjA6e31zOjM6Im5ldyI7YTowOnt9fXM6MzoidXJsIjthOjA6e31zOjUwOiJsb2dpbl93ZWJfNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=',	1726113897),
+('X0CZ4r1CvX0LEn5uT1GNlJd13wjQ9uykxhabp1vP',	NULL,	'127.0.0.1',	'PostmanRuntime/7.41.1',	'YTozOntzOjY6Il90b2tlbiI7czo0MDoibmVxMk1CVENpa29oYzdoc3RSd3A2R29VSVdKMXdrMVEycDdoSmlqeiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MjY6Imh0dHA6Ly9mbGFzaGZpdC50ZXN0L2xvZ2luIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319fQ==',	1726111999);
 
 DROP TABLE IF EXISTS `settings`;
 CREATE TABLE `settings` (
@@ -532,49 +539,61 @@ CREATE TABLE `trainers` (
 DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `id_transaction` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint DEFAULT NULL,
+  `metode_id` bigint DEFAULT NULL,
   `date` date DEFAULT NULL,
   `category` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `harga_asli` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `potongan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `voucher` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `total` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `picture` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_transaction`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `transactions` (`id_transaction`, `date`, `category`, `total`, `status`, `created_at`, `updated_at`) VALUES
-(1,	'2024-08-06',	'New Member',	'256000',	'approved',	'2024-08-06 07:19:08',	'2024-08-07 00:06:54'),
-(2,	'2024-08-06',	'New Member',	'356000',	'approved',	'2024-08-06 08:11:27',	'2024-08-06 01:53:04'),
-(3,	'2024-08-06',	'New Member',	'356000',	'declined',	'2024-08-06 08:59:17',	'2024-08-06 08:59:17'),
-(4,	'2024-08-13',	'Re-New',	'200000',	'pending',	'2024-08-13 06:00:47',	'2024-09-05 19:59:38'),
-(5,	'2024-08-13',	'Re-New',	'500000',	'approved',	'2024-08-13 06:01:24',	'2024-08-13 06:01:24');
+INSERT INTO `transactions` (`id_transaction`, `user_id`, `metode_id`, `date`, `category`, `harga_asli`, `potongan`, `voucher`, `total`, `status`, `picture`, `created_at`, `updated_at`) VALUES
+(1,	1,	2,	'2024-08-06',	'New Member',	'266000',	'10000',	'',	'256000',	'pending',	'assets/transaction/foto1.jpg',	'2024-08-06 07:19:08',	'2024-09-17 20:53:52'),
+(2,	1,	2,	'2024-08-06',	'New Member',	'366000',	'10000',	'VOUCHER 10000',	'346000',	'approved',	'assets/transaction/foto2.jpg',	'2024-08-06 08:11:27',	'2024-08-06 01:53:04'),
+(3,	1,	2,	'2024-08-06',	'New Member',	'406000',	'50000',	'VOUCHER 10000',	'346000',	'declined',	'assets/transaction/foto3.jpg',	'2024-08-06 08:59:17',	'2024-08-06 08:59:17'),
+(4,	1,	2,	'2024-08-13',	'Re-New',	'500000',	'100000',	'VOUCHER 10000',	'390000',	'approved',	'assets/transaction/foto4.jpg',	'2024-08-13 06:00:47',	'2024-09-11 01:48:00'),
+(5,	1,	2,	'2024-08-13',	'Re-New',	'700000',	'200000',	'VOUCHER 10000',	'490000',	'approved',	'assets/transaction/foto5.jpg',	'2024-08-13 06:01:24',	'2024-09-11 01:33:57'),
+(9,	1,	2,	'2024-08-06',	'Re-New',	'500000',	'100000',	NULL,	'400000',	'Pending',	'assets/transaction/Q8IHdd68pI1iboY15AqrhYSP3qOcE8axAbKQeIYi.png',	'2024-09-17 23:07:11',	'2024-09-17 23:07:11'),
+(10,	1,	2,	'2024-08-06',	'Re-New',	'500000',	'100000',	'VOUCHER 10000',	'390000',	'Pending',	'assets/transaction/0TH1yuppa7qCkfgHUPyryAsFu1sHAnKHAxXfAWR9.png',	'2024-09-17 23:08:17',	'2024-09-17 23:08:17'),
+(11,	1,	2,	'2024-08-06',	'Sesi-PT',	'500000',	'100000',	'VOUCHER 10000',	'390000',	'Pending',	'assets/transaction/ySKp5wvzLVnjLJkQ2NBNz3jh0YQETH2y3fxqrU7f.png',	'2024-09-17 23:09:48',	'2024-09-17 23:09:48');
 
 DROP TABLE IF EXISTS `trials`;
 CREATE TABLE `trials` (
   `id_trial` bigint unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint DEFAULT NULL,
   `nik` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'pending',
+  `location_id` int DEFAULT NULL,
+  `code_trial` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id_trial`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-INSERT INTO `trials` (`id_trial`, `user_id`, `nik`, `status`, `created_at`, `updated_at`) VALUES
-(1,	1,	'787878233222',	'Hangus',	'2024-09-05 07:19:25',	'2024-09-05 00:19:25'),
-(2,	10,	'32123231',	'Hangus',	'2024-09-06 03:03:59',	'2024-09-05 20:03:59');
+INSERT INTO `trials` (`id_trial`, `user_id`, `nik`, `status`, `location_id`, `code_trial`, `created_at`, `updated_at`) VALUES
+(4,	11,	'31276321',	'Hangus',	3,	'TRL4176',	'2024-09-12 03:57:57',	'2024-09-11 20:57:57'),
+(5,	12,	'31276321564567',	'pending',	3,	'TRL7510',	'2024-09-11 21:04:29',	'2024-09-11 21:04:29');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `two_factor_secret` text COLLATE utf8mb4_unicode_ci,
   `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci,
   `two_factor_confirmed_at` timestamp NULL DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `roles` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `roles` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'USER',
   `current_team_id` bigint unsigned DEFAULT NULL,
   `profile_photo_path` varchar(2048) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `phone` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -585,11 +604,12 @@ CREATE TABLE `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `roles`, `current_team_id`, `profile_photo_path`, `phone`, `revoke_akun`, `created_at`, `updated_at`) VALUES
-(1,	'lisa kempink',	'kempink@gmail.com',	NULL,	'$2y$12$Cycv19LevHmdbcaszTcuAuZUwS11vyViciVJTFT8br7l6zyiRBxAK',	NULL,	NULL,	NULL,	'',	'SUPER ADMIN',	1,	'assets/user/LYniJ4MFn4zye3zjXAayBSCFmLS5SYwHQ5UX59a9.jpg',	'911',	NULL,	'2024-07-24 02:49:10',	'2024-09-05 20:06:13'),
-(10,	'Henry Wahono',	'Henry@gmail.com',	NULL,	'$2y$12$IDWkY7ECYw6rXN3QIWJur.Dx884QJRB5IwGDwNvLJhPeNi3yNETlC',	NULL,	NULL,	NULL,	NULL,	'ADMIN',	NULL,	'assets/user/lcYunPmH0n0D92uRSshjibIt1iXn3I686k5QfEJS.png',	'1010',	NULL,	'2024-09-04 21:50:42',	'2024-09-04 21:50:42'),
-(11,	'Thiery henry',	'Henry123@gmail.com',	NULL,	'$2y$12$HuaTnh6LXObPjAzSduDAG.k83dj6WjtxHg1zcDuX5alG4WUKVClIe',	NULL,	NULL,	NULL,	NULL,	'TRAINER',	NULL,	'assets/user/D6ZqWOhRUhTIZm7mxLojwnUQFRjM8fBsADiW8Nhh.jpg',	'3289 2388 3212',	NULL,	'2024-09-05 19:13:33',	'2024-09-05 19:13:33'),
-(12,	'virgus hayo',	'hayoapa@gmail.com',	NULL,	'$2y$12$nVkmpP/GVSPI2uP1eAkqW.rV7gipsufBP5pN5KX0LdwE0vNMEMZ/C',	NULL,	NULL,	NULL,	NULL,	'USER',	NULL,	'assets/user/gCHXFLGJ8xJ0YYBJ4eA8woyP4oGvw6LUFgHLKLQO.jpg',	'2012 0912 1234',	NULL,	'2024-09-05 19:37:45',	'2024-09-05 19:37:45');
+INSERT INTO `users` (`id`, `name`, `email`, `gender`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `two_factor_confirmed_at`, `remember_token`, `roles`, `current_team_id`, `profile_photo_path`, `phone`, `revoke_akun`, `created_at`, `updated_at`) VALUES
+(1,	'lisa kempink 12',	'kempink@gmail.com',	'Wanita',	NULL,	'$2y$12$Cycv19LevHmdbcaszTcuAuZUwS11vyViciVJTFT8br7l6zyiRBxAK',	'',	'',	NULL,	'',	'SUPER ADMIN',	1,	'assets/user/1U79Mz1qv7XzQ9n9ZxSjybTkYXQ0yGfp0x8z8YSu.png',	'911',	'lisa kempink 12 [kempink@gmail.com]',	'2024-07-24 02:49:10',	'2024-09-10 21:47:22'),
+(10,	'Henry Wahono',	'Henry@gmail.com',	'Pria',	NULL,	'$2y$12$IDWkY7ECYw6rXN3QIWJur.Dx884QJRB5IwGDwNvLJhPeNi3yNETlC',	'',	'',	NULL,	'',	'ADMIN',	NULL,	'assets/user/lcYunPmH0n0D92uRSshjibIt1iXn3I686k5QfEJS.png',	'1010',	'',	'2024-09-04 21:50:42',	'2024-09-04 21:50:42'),
+(11,	'Thiery henry',	'Henry123@gmail.com',	'Pria',	NULL,	'$2y$12$HuaTnh6LXObPjAzSduDAG.k83dj6WjtxHg1zcDuX5alG4WUKVClIe',	'',	'',	NULL,	'',	'TRAINER',	NULL,	'assets/user/D6ZqWOhRUhTIZm7mxLojwnUQFRjM8fBsADiW8Nhh.jpg',	'3289 2388 3212',	'',	'2024-09-05 19:13:33',	'2024-09-05 19:13:33'),
+(12,	'virgus hayo',	'hayoapa@gmail.com',	'Pria',	NULL,	'$2y$12$nVkmpP/GVSPI2uP1eAkqW.rV7gipsufBP5pN5KX0LdwE0vNMEMZ/C',	'',	'',	NULL,	'',	'USER',	NULL,	'assets/user/gCHXFLGJ8xJ0YYBJ4eA8woyP4oGvw6LUFgHLKLQO.jpg',	'2012 0912 1234',	'',	'2024-09-05 19:37:45',	'2024-09-05 19:37:45'),
+(13,	'Pak Jun',	'juniapak@gmail.com',	'Pria',	NULL,	'$2y$12$3Yky4.Q6FRIp6LKHG2QGEeqywvxQQzpozTzIZ5I1TRWSKgwT/wdwe',	'',	'',	NULL,	'',	'USER',	NULL,	'assets/user/tgIiDjAdkBhDLolJxdH9GGS3ko62D2SXAUBE4g99.png',	'1234 5678 0123',	'',	'2024-09-10 21:40:44',	'2024-09-10 21:40:44');
 
 DROP TABLE IF EXISTS `vouchers`;
 CREATE TABLE `vouchers` (
@@ -617,4 +637,4 @@ INSERT INTO `vouchers` (`id_voucher`, `discount`, `title`, `category`, `code`, `
 (6,	'30000',	'Testttt',	'Flash Sale',	NULL,	NULL,	'-',	'2024-08-21 09:36:00',	'2024-08-21 21:36:00',	'10',	'2024-08-20 19:37:08',	'2024-08-20 19:37:08'),
 (7,	'20000',	'Flash sales',	'Flash Sale',	NULL,	NULL,	'-',	'2024-08-21 10:09:00',	'2024-08-21 11:09:00',	'10',	'2024-08-20 20:09:42',	'2024-08-20 20:09:42');
 
--- 2024-09-06 03:21:48
+-- 2024-09-18 06:39:27
